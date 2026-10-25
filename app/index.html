@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: phone-first study app. Sticky top bar, one scrolling screen, fixed bottom tab bar. Highlighter marks the exam pearls. */
+/* Layout: phone-first study app. Sticky top bar, one scrolling screen, fixed bottom tab bar. */
 :root{
   --bg:#F1F3F8; --surface:#FFFFFF; --sunk:#E8EBF3; --ink:#111A30; --muted:#5C6680; --line:#DCE1EC;
   --primary:#2F43C9; --primary-ink:#FFFFFF; --primary-soft:#E4E8FB;
@@ -143,7 +143,7 @@ label.f>input,label.f>select,label.f>textarea{font-size:1rem}
 .expl{line-height:1.6}
 .pearl{background:var(--hl-soft);border-radius:12px;padding:12px 14px;color:var(--ink);line-height:1.5}
 .pearl .eyebrow{color:var(--hl-ink);display:block;margin-bottom:2px}
-.pearl mark{background:linear-gradient(transparent 55%,var(--hl) 55%);color:inherit;padding:0 1px}
+mark{background:none;color:inherit}
 .navq{display:grid;grid-template-columns:auto 1fr;gap:10px}
 .timer{font-family:var(--f-mono);font-size:.9rem;color:var(--muted)}
 .dots{display:flex;flex-wrap:wrap;gap:4px}
@@ -489,7 +489,7 @@ function renderCards(){
     return put('#cards',`${tabs}<div class="card"><div class="row between"><h2>Sınav incileri</h2><span class="small muted num">${list.length} bilgi</span></div>
       <p class="small muted">Sınavdan önceki son günlerde hızlıca gözden geçirmek için her sorunun akılda kalacak özü.</p>
       <select id="pearlTopic" aria-label="Konu">${topicOpts(t,true)}</select>
-      <div class="pearls">${list.map(q=>`<div class="pi"><span class="tag" style="align-self:flex-start">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span><span><mark style="background:linear-gradient(transparent 60%,var(--hl) 60%);color:inherit">${esc(q.p)}</mark></span></div>`).join('')}</div></div>`)}
+      <div class="pearls">${list.map(q=>`<div class="pi"><span class="tag" style="align-self:flex-start">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span><span>${esc(q.p)}</span></div>`).join('')}</div></div>`)}
   if(!pid)return put('#cards',`${tabs}<div class="empty">Kartlar her profile özeldir. Önce profil seç.<br><br><button class="btn" data-act="whopick">Profil seç</button></div>`);
   const st=S.study;
   if(!st){const due=dueList(pid).length,total=Object.keys(deck(pid)).filter(k=>qIndex[k]).length;
