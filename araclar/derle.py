@@ -11,7 +11,7 @@ B = []
 def Q(t, g, s, o, a, e, p):
     B.append(dict(t=t, g=g, s=s, o=o, a=a, e=e, p=p))
 
-for yol in sorted(glob.glob(os.path.join(KOK, 'sorular', 'bolum*.py'))):
+for yol in sorted(glob.glob(os.path.join(KOK, 'sorular', 'bolum*.py')), key=lambda y: int(re.search(r'(\d+)\.py$', y).group(1))):
     kod = open(yol, encoding='utf-8').read()
     kod = kod.replace('B = []\n', '').replace(
         'def Q(t, g, s, o, a, e, p):\n    B.append(dict(t=t, g=g, s=s, o=o, a=a, e=e, p=p))\n', '')
