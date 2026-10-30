@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: phone-first study app. Sticky top bar, one scrolling screen, fixed bottom tab bar. Highlighter marks the exam pearls. */
+/* Layout: phone-first study app. Sticky top bar, one scrolling screen, fixed bottom tab bar. */
 :root{
   --bg:#F1F3F8; --surface:#FFFFFF; --sunk:#E8EBF3; --ink:#111A30; --muted:#5C6680; --line:#DCE1EC;
   --primary:#2F43C9; --primary-ink:#FFFFFF; --primary-soft:#E4E8FB;
@@ -57,8 +57,8 @@ main .wrap{display:flex;flex-direction:column;gap:16px;padding-block:8px 0}
 
 /* bottom nav */
 nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
-nav.bottom .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--nav-h)}
-nav.bottom button{background:none;border:0;font:inherit;font-size:.72rem;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;position:relative}
+nav.bottom .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);height:var(--nav-h)}
+nav.bottom button{background:none;border:0;font:inherit;font-size:.7rem;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;position:relative}
 nav.bottom button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 nav.bottom button[aria-current="page"]{color:var(--primary)}
 nav.bottom .dotn{position:absolute;top:8px;left:calc(50% + 6px);min-width:16px;height:16px;border-radius:8px;background:var(--bad);color:#fff;font-size:.65rem;line-height:16px;padding:0 4px;font-family:var(--f-mono)}
@@ -107,6 +107,25 @@ label.f>input,label.f>select,label.f>textarea{font-size:1rem}
 .pc .stat{display:flex;justify-content:space-between;font-size:.88rem;gap:6px}
 .pc .stat b{font-family:var(--f-mono);font-weight:600}
 
+/* plan */
+.task{display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line)}
+.task:first-child{border-top:0}
+.task .ck{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center}
+.task.done .ck{background:var(--good);border-color:var(--good)}
+.task.done .ck::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.task .b{flex:1;min-width:0}
+.task.done .b b{color:var(--muted);text-decoration:line-through}
+.blk{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:12px 0;border-top:1px solid var(--line)}
+.blk:first-child{border-top:0}
+.blk .bar{grid-column:1/-1}
+.blk.now{background:var(--primary-soft);border-radius:12px;padding:12px;margin:4px -12px;border-top:0}
+.blk.now + .blk{border-top:0}
+.blk.past .nm{color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpis div{background:var(--sunk);border-radius:12px;padding:10px 12px;min-width:0}
+.kpis b{display:block;font-family:var(--f-display);font-size:1.35rem;font-weight:800;line-height:1.2}
+.kpis span{font-size:.8rem;color:var(--muted)}
+
 /* chips */
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font:inherit;font-size:.9rem;cursor:pointer}
@@ -143,7 +162,7 @@ label.f>input,label.f>select,label.f>textarea{font-size:1rem}
 .expl{line-height:1.6}
 .pearl{background:var(--hl-soft);border-radius:12px;padding:12px 14px;color:var(--ink);line-height:1.5}
 .pearl .eyebrow{color:var(--hl-ink);display:block;margin-bottom:2px}
-.pearl mark{background:linear-gradient(transparent 55%,var(--hl) 55%);color:inherit;padding:0 1px}
+mark{background:none;color:inherit}
 .navq{display:grid;grid-template-columns:auto 1fr;gap:10px}
 .timer{font-family:var(--f-mono);font-size:.9rem;color:var(--muted)}
 .dots{display:flex;flex-wrap:wrap;gap:4px}
@@ -152,6 +171,19 @@ label.f>input,label.f>select,label.f>textarea{font-size:1rem}
 .dots button.cur{outline:2px solid var(--ink)}
 .dots button.r{background:var(--good-soft);border-color:var(--good)}
 .dots button.w{background:var(--bad-soft);border-color:var(--bad)}
+.dots button.fl{position:relative}
+.dots button.fl::after{content:"";position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;background:var(--warn);border:1.5px solid var(--surface)}
+.timer.low{color:var(--bad);font-weight:700}
+.ydus{background:var(--primary);color:var(--primary-ink);border-color:transparent}
+.ydus .eyebrow,.ydus .muted{color:inherit;opacity:.8}
+.ydus .btn{background:var(--primary-ink);color:var(--primary)}
+.facts{display:flex;flex-wrap:wrap;gap:6px}
+.facts span{font-size:.82rem;font-weight:600;border-radius:999px;padding:3px 10px;background:rgba(255,255,255,.16)}
+.flagbtn{display:flex;align-items:center;gap:8px;background:none;border:1px dashed var(--line);border-radius:10px;padding:8px 12px;font:inherit;font-size:.9rem;color:var(--muted);cursor:pointer;justify-self:start}
+.flagbtn[aria-pressed="true"]{border-style:solid;border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.trend{width:100%;height:150px;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.82rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 
 /* results */
 .score{font-family:var(--f-display);font-weight:800;font-size:2.6rem;line-height:1}
@@ -206,6 +238,7 @@ details.fold>summary{cursor:pointer;font-weight:700;font-family:var(--f-display)
   <section data-screen="home"><div id="home" style="display:flex;flex-direction:column;gap:16px"></div></section>
   <section data-screen="quiz" hidden><div id="quiz" style="display:flex;flex-direction:column;gap:16px"></div></section>
   <section data-screen="cards" hidden><div id="cards" style="display:flex;flex-direction:column;gap:16px"></div></section>
+  <section data-screen="plan" hidden><div id="plan" style="display:flex;flex-direction:column;gap:16px"></div></section>
   <section data-screen="stats" hidden><div id="stats" style="display:flex;flex-direction:column;gap:16px"></div></section>
   <section data-screen="more" hidden style="display:flex;flex-direction:column;gap:16px">
     <div class="card">
@@ -249,11 +282,6 @@ details.fold>summary{cursor:pointer;font-weight:700;font-family:var(--f-display)
       <div class="list" id="profList"></div>
       <form class="row" id="addProf"><input id="np-name" placeholder="Yeni profil adı" aria-label="Yeni profil adı" required style="flex:1"><button class="btn soft" type="submit">Ekle</button></form>
     </div>
-    <div class="card">
-      <h2>Çalışma planı</h2>
-      <p class="muted small">Konular sınav tarihine kadar ağırlıklarına göre haftalara bölünür; son haftalar genel tekrar içindir.</p>
-      <div class="list" id="planList"></div>
-    </div>
     <p class="muted small" style="text-align:center">Hazır sorular YDUS'ta sık sorulan konu ve kavramlar esas alınarak hazırlanmış özgün sorulardır; birebir çıkmış soru değildir. Güncel kılavuzlarla teyit ederek kullanın.</p>
   </section>
 </div></main>
@@ -262,8 +290,9 @@ details.fold>summary{cursor:pointer;font-weight:700;font-family:var(--f-display)
   <button data-go="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Bugün</button>
   <button data-go="quiz"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Soru çöz</button>
   <button data-go="cards"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="14" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg>Kartlar<span class="dotn" id="dueDot" hidden></span></button>
+  <button data-go="plan"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3M8 17h6"/></svg>Plan</button>
   <button data-go="stats"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Analiz</button>
-  <button data-go="more"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Daha fazla</button>
+  <button data-go="more"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>Diğer</button>
 </div></nav>
 <div class="overlay" id="overlay" hidden></div>
 <div class="toast" id="toast" hidden></div>
@@ -281,6 +310,12 @@ const BANK=JSON.parse(document.getElementById('bankData').textContent);
 const DEF={start:'2026-10-26',exam:'2027-07-04',goal:30};
 const PCOL=['var(--p1)','var(--p2)','var(--p3)'];
 const L='ABCDE';
+// ÖSYM 2026 YDUS kılavuzu md. 1.3: iç hastalıkları 60 soru, 80 dakika; 4 yanlış 1 doğruyu götürür
+const YD={n:60,min:80,pen:4,pass:45};
+const isExam=m=>m==='exam'||m==='ydus';
+const netOf=(r,w)=>r-w/YD.pen;
+const ydNum=net=>Math.max(0,Math.round(net/YD.n*1000)/10);
+const ydScore=net=>String(ydNum(net)).replace('.',',');
 const GTAG={sik:'Sık sorulan tema',olasi:'Olası soru',kendi:'Kendi sorum'};
 
 const S={profiles:[],own:[],settings:{},answers:{},deck:{},stars:{},progress:{},exams:{},
@@ -347,6 +382,19 @@ function plan(){const start=S.settings.start||DEF.start,exam=S.settings.exam||DE
   let w=0;const blocks=TOPICS.map((t,i)=>{const b={t,w0:w,w1:w+al[i]-1,from:addDays(start,w*7),to:addDays(start,(w+al[i])*7-1)};w+=al[i];return b});
   return{blocks,rev:{w0:w,from:addDays(start,w*7),to:exam},cw:Math.floor(dayDiff(start,today())/7),start,exam}}
 
+const tCount=tid=>ALLQ().filter(q=>q.t===tid).length;
+// answers keep only the last answer date, so "this week" counts questions last answered in the range
+function answeredIn(pid,tid,from,to){const a=ans(pid);let n=0;for(const id in a){const q=qIndex[id];if(!q||(tid&&q.t!==tid))continue;const at=a[id].at||'';if(at>=from&&at<=to)n++}return n}
+function weekGoal(P,b,pid){const from=addDays(P.start,P.cw*7),to=addDays(P.start,P.cw*7+6),t=today();
+  const goal=Math.ceil(tCount(b.t.id)/(b.w1-b.w0+1));if(!pid)return{from,to,goal,done:0,before:0,todayN:0};
+  const before=answeredIn(pid,b.t.id,from,addDays(t,-1)),todayN=answeredIn(pid,b.t.id,t,t);return{from,to,goal,done:before+todayN,before,todayN}}
+// expected first-pass coverage by today if every block were finished on schedule
+function expectedSolved(P){const t=today();let e=0;for(const b of P.blocks){const n=tCount(b.t.id);if(t>b.to)e+=n;else if(t>=b.from)e+=Math.round(n*(dayDiff(b.from,t)+1)/(dayDiff(b.from,b.to)+1))}return e}
+// weakest first; unanswered topics count as weak so they come up early in review
+function weakOrder(pid,excl){return TOPICS.filter(t=>t.id!==excl).map(t=>({t,...(pid?topicStats(pid,t.id):{n:0,r:0,tot:tCount(t.id)})})).sort((a,b)=>(a.n?a.r/a.n:0)-(b.n?b.r/b.n:0)||b.t.w-a.t.w)}
+function revWeeks(P,pid){const n=Math.max(1,Math.floor(dayDiff(P.rev.from,P.exam)/7)+1),ord=weakOrder(pid),per=Math.ceil(ord.length/n),out=[];
+  for(let i=0;i<n;i++){const ts=ord.slice(i*per,(i+1)*per);if(ts.length)out.push({i,from:addDays(P.rev.from,i*7),to:i===n-1?P.exam:addDays(P.rev.from,i*7+6),ts})}return out}
+
 /* rendering */
 let rq=false;function schedule(){if(rq)return;rq=true;requestAnimationFrame(()=>{rq=false;render()})}
 function put(sel,html){const el=$(sel);if(!el)return;const a=document.activeElement;
@@ -366,9 +414,11 @@ function render(){
   if(S.screen==='home')renderHome();
   if(S.screen==='quiz')renderQuiz();
   if(S.screen==='cards')renderCards();
+  if(S.screen==='plan')renderPlan();
   if(S.screen==='stats')renderStats();
   if(S.screen==='more')renderMore();
   renderSheet();
+  if(S.quiz&&S.quiz.mode==='ydus'&&!S.quiz.done)lsSet('ydus.exam',JSON.stringify(S.quiz));
 }
 
 function ring(v,goal){const r=40,c=2*Math.PI*r,p=Math.min(1,goal?v/goal:0);
@@ -405,11 +455,20 @@ function renderHome(){
      <button data-act="quickunsolved" ${unsolved?'':'disabled'}><b class="num">${unsolved}</b><span>Çözülmemiş</span></button>
      <button data-act="quickstar" ${nstar?'':'disabled'}><b class="num" style="color:var(--warn)">${nstar}</b><span>İşaretlediklerim</span></button>
    </div>
-   ${cur?`<div class="card"><span class="eyebrow">BU HAFTANIN KONUSU · ${fmtD(cur.from)} – ${fmtD(cur.to)}</span><div class="row between"><h3>${esc(cur.t.name)}</h3><button class="btn soft sm" data-act="quicktopic" data-t="${cur.t.id}">10 soru çöz</button></div></div>`:wk?`<div class="card"><span class="eyebrow">ÇALIŞMA PLANI</span><p>${wk}</p></div>`:''}
+   ${cur?(()=>{const W=weekGoal(P,cur,pid);return `<div class="card"><span class="eyebrow">BU HAFTANIN KONUSU · ${fmtD(W.from)} – ${fmtD(W.to)}</span><div class="row between"><h3>${esc(cur.t.name)}</h3><span class="small muted num">${W.done>=W.goal?'hedef tamam':W.done+'/'+W.goal+' soru'}</span></div>
+     <span class="bar"><i style="width:${pct(Math.min(W.done,W.goal),W.goal)}%"></i></span><div class="row" style="gap:8px"><button class="btn soft sm" data-act="plannew" data-t="${cur.t.id}">10 soru çöz</button><button class="btn plain sm" data-go="plan">Planın tamamı</button></div></div>`})():wk?`<div class="card"><span class="eyebrow">ÇALIŞMA PLANI</span><p>${wk}</p><button class="btn plain sm" data-go="plan" style="align-self:flex-start">Planın tamamı</button></div>`:''}
    ${S.profiles.length>1?`<div class="card"><div class="row between"><h3>İkimiz</h3><button class="btn plain sm" data-go="stats">Ayrıntılı analiz</button></div><div class="duo">${duo}</div></div>`:''}
    <div class="card"><div class="row between"><h3>Konular</h3><span class="small muted">Dokun, o konudan 10 soru gelsin</span></div><div>${topics}</div></div>`)}
 
 /* ---------- quiz ---------- */
+// questions per topic follow the exam weights; unsolved questions are drawn first
+function ydusSet(){const a=S.active?ans(S.active):{},sum=TOPICS.reduce((x,t)=>x+t.w,0);
+  const qt=TOPICS.map(t=>({t,k:Math.floor(t.w/sum*YD.n)}));let rem=YD.n-qt.reduce((x,y)=>x+y.k,0);
+  qt.slice().sort((x,y)=>y.t.w-x.t.w).forEach(x=>{if(rem>0){x.k++;rem--}});
+  const ids=[];for(const{t,k}of qt){const all=shuffle(ALLQ().filter(q=>q.t===t.id));ids.push(...all.filter(q=>!a[q.id]).concat(all.filter(q=>a[q.id])).slice(0,k).map(q=>q.id))}
+  return shuffle(ids)}
+function startYdus(){S.confirm=null;S.quiz={ids:ydusSet(),i:0,picks:{},checked:{},flags:{},mode:'ydus',lim:YD.min*60,t0:Date.now(),done:false};go('quiz')}
+const ydList=pid=>(((S.exams[pid]||{}).list)||[]).filter(e=>e.mode==='ydus');
 function topicOpts(sel,all){return(all?'<option value="">Tüm konular</option>':'')+TOPICS.map(t=>`<option value="${t.id}"${t.id===sel?' selected':''}>${esc(t.name)}</option>`).join('')}
 function pool(o){const pid=S.active,a=pid?ans(pid):{},st=pid?stars(pid):{};
   return ALLQ().filter(q=>(!o.topics.length||o.topics.includes(q.t))&&(o.src==='all'||q.g===o.src)&&
@@ -422,7 +481,12 @@ const seg=(name,val,items)=>`<div class="seg" role="group">${items.map(([v,l])=>
 function renderQuiz(){
   const qz=S.quiz;
   if(!qz){const o=S.setup,n=pool(o).length;
-    put('#quiz',`<div class="card"><h2>Soru çöz</h2>
+    const hist=S.active?(((S.exams[S.active]||{}).list)||[]).slice(-5).reverse():[];
+    put('#quiz',`<div class="card ydus"><span class="eyebrow">GERÇEK SINAV FORMATI</span><h2>YDUS denemesi</h2>
+      <div class="facts"><span>${YD.n} soru</span><span>${YD.min} dakika</span><span>${YD.pen} yanlış 1 doğruyu götürür</span></div>
+      <p class="small muted">Sorular konu ağırlığına göre seçilir, önce çözmediklerin gelir. Süre bitince deneme kendiliğinden kapanır. Sonda net ve yaklaşık YDUS puanın hesaplanır.</p>
+      <button class="btn block" data-act="ydus">Denemeye başla</button></div>
+     <div class="card"><h2>Soru çöz</h2>
       <span class="eyebrow">KONU</span><div class="chips"><button class="chip" data-act="tpAll" aria-pressed="${!o.topics.length}">Tümü</button>${TOPICS.map(t=>`<button class="chip" data-act="tp" data-t="${t.id}" aria-pressed="${o.topics.includes(t.id)}">${esc(t.name)}</button>`).join('')}</div>
       <span class="eyebrow">SORU TÜRÜ</span>${seg('src',o.src,[['all','Tümü'],['sik','Sık sorulan'],['olasi','Olası'],['kendi','Kendi']])}
       <span class="eyebrow">HANGİLERİ</span>${seg('status',o.status,[['mix','Karışık'],['new','Çözülmemiş'],['wrong','Yanlışlar'],['star','İşaretli']])}
@@ -430,25 +494,30 @@ function renderQuiz(){
       <span class="eyebrow">MOD</span>${seg('mode',o.mode,[['study','Çalışma'],['exam','Deneme sınavı']])}
       <p class="small muted">${o.mode==='study'?'Her sorudan sonra doğru cevap, açıklama ve sınav incisi gösterilir.':'Süre tutulur, cevaplar sonda topluca açıklanır. YDUS temposu için soru başına ortalama 1,5 dakika hedefle.'}</p>
       <button class="btn block" data-act="start" ${n?'':'disabled'}>${n?`Başla · ${Math.min(n,o.n>=999?n:o.n)} soru`:'Bu seçimde soru yok'}</button></div>
-      ${(S.exams[S.active]||{}).list&&S.exams[S.active].list.length?`<div class="card"><h3>Son denemelerin</h3><div class="list">${S.exams[S.active].list.slice(-5).reverse().map(e=>`<div class="it"><div class="b">${fmtD(e.at)} · ${e.n} soru · ${e.mode==='exam'?'deneme':'çalışma'}</div><b class="num">%${pct(e.r,e.n)}</b></div>`).join('')}</div></div>`:''}`);
+      ${hist.length?`<div class="card"><div class="row between"><h3>Son oturumların</h3><button class="btn plain sm" data-go="stats">Gelişim grafiği</button></div><div class="list">${hist.map(e=>`<div class="it"><div class="b">${fmtD(e.at)} · ${e.n} soru · ${e.mode==='ydus'?'YDUS denemesi':e.mode==='exam'?'deneme':'çalışma'}</div><b class="num">${e.mode==='ydus'?ydScore(e.net)+' puan':'%'+pct(e.r,e.n)}</b></div>`).join('')}</div></div>`:''}`);
     return}
   if(qz.done)return renderResults();
   const q=qIndex[qz.ids[qz.i]];if(!q){qz.ids.splice(qz.i,1);if(qz.i>=qz.ids.length)qz.i=Math.max(0,qz.ids.length-1);if(!qz.ids.length){S.quiz=null}return schedule()}
   const pick=qz.picks[q.id],checked=qz.mode==='study'&&qz.checked[q.id];const star=S.active&&stars(S.active)[q.id];
   const opts=q.o.map((o,i)=>{let c='';if(checked){if(i===q.a)c='right';else if(i===pick)c='wrong'}else if(i===pick)c='sel';
     return `<button class="opt ${c}" data-act="pick" data-i="${i}" ${checked?'disabled':''}><span class="L">${L[i]}</span><span>${esc(o)}</span></button>`}).join('');
-  const answered=Object.keys(qz.picks).length;
+  const answered=Object.keys(qz.picks).length,fl=qz.flags||{},nfl=Object.keys(fl).filter(k=>fl[k]).length;
+  const ex=isExam(qz.mode),ending=S.confirm==='finish';
   put('#quiz',`<div class="qtop"><button class="iconbtn" data-act="quitq" aria-label="Çık"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
      <div class="bar"><i style="width:${pct(qz.i+1,qz.ids.length)}%"></i></div><span class="num small">${qz.i+1}/${qz.ids.length}</span>
      <button class="iconbtn" data-act="star" aria-pressed="${!!star}" aria-label="İşaretle"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></button></div>
-   ${qz.mode==='exam'?`<div class="row between"><span class="timer" id="timer"></span><span class="small muted">${answered}/${qz.ids.length} cevaplandı</span></div>`:''}
+   ${ex?`<div class="row between"><span class="timer" id="timer"></span><span class="small muted">${answered}/${qz.ids.length} cevaplandı${nfl?` · ${nfl} emin değilim`:''}</span></div>`:''}
    <div class="card"><div class="tagrow"><span class="tag">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span><span class="tag ${q.g}">${GTAG[q.g]||''}</span></div>
-     <div class="stem">${esc(q.s)}</div><div class="opts">${opts}</div></div>
+     <div class="stem">${esc(q.s)}</div><div class="opts">${opts}</div>
+     ${qz.mode==='ydus'?`<button class="flagbtn" data-act="flag" aria-pressed="${!!fl[q.id]}"><span>${fl[q.id]?'●':'○'}</span>Emin değilim, sonra döneceğim</button><p class="small muted" style="margin-top:-4px">Seçili şıkka tekrar dokunursan cevap silinir ve soru boş kalır.</p>`:''}</div>
    ${checked?explain(q,pick===q.a):''}
    <div class="navq"><button class="btn plain" data-act="prevq" ${qz.i?'':'disabled'}>Önceki</button>
      ${qz.mode==='study'&&!checked?`<button class="btn" data-act="check" ${pick==null?'disabled':''}>Cevabı kontrol et</button>`
-       :qz.i+1<qz.ids.length?`<button class="btn" data-act="nextq">Sonraki soru</button>`:`<button class="btn" data-act="finish">${qz.mode==='exam'?'Denemeyi bitir':'Sonuçları gör'}</button>`}</div>
-   ${qz.mode==='exam'?`<div class="card"><span class="eyebrow">SORULAR</span><div class="dots">${qz.ids.map((id,i)=>`<button class="${qz.picks[id]!=null?'ans':''} ${i===qz.i?'cur':''}" data-act="jump" data-i="${i}">${i+1}</button>`).join('')}</div><button class="btn ghost" data-act="finish">Denemeyi bitir</button></div>`:''}`);
+       :qz.i+1<qz.ids.length?`<button class="btn" data-act="nextq">Sonraki soru</button>`:`<button class="btn" data-act="${ex?'askfinish':'finish'}">${ex?'Denemeyi bitir':'Sonuçları gör'}</button>`}</div>
+   ${ex?`<div class="card"><div class="row between"><span class="eyebrow">SORU HARİTASI</span>${qz.mode==='ydus'?'<span class="legend"><span><i style="background:var(--primary-soft);border:1px solid var(--primary)"></i>cevaplı</span><span><i style="background:var(--warn)"></i>emin değilim</span></span>':''}</div>
+     <div class="dots">${qz.ids.map((id,i)=>`<button class="${qz.picks[id]!=null?'ans':''} ${i===qz.i?'cur':''} ${fl[id]?'fl':''}" data-act="jump" data-i="${i}" aria-label="Soru ${i+1}">${i+1}</button>`).join('')}</div>
+     ${ending?`<div class="banner">${qz.ids.length-answered} soru boş${nfl?`, ${nfl} soru "emin değilim" işaretli`:''}. Bitirmek istediğine emin misin?</div><div class="grid2"><button class="btn" data-act="finish">Evet, bitir</button><button class="btn plain" data-act="cancelfinish">Devam et</button></div>`
+       :`<button class="btn ghost" data-act="askfinish">Denemeyi bitir</button>`}</div>`:''}`);
   tick()}
 function explain(q,ok){return `<div class="card"><span class="verdict ${ok?'ok':'no'}">${ok?'Doğru':'Yanlış'} · Doğru cevap ${L[q.a]}</span>
   ${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}
@@ -458,25 +527,47 @@ function record(q,pick){const pid=S.active;if(!pid||!db||S.readOnly)return;const
   bump('q');if(ok)bump('k');
   if(!ok&&!deck(pid)[q.id])merge('deck/'+pid,{c:{[q.id]:{i:0,e:2.5,r:0,d:addDays(today(),1)}}})}
 function finishQuiz(){const qz=S.quiz;
-  if(qz.mode==='exam'){for(const id of qz.ids){const p=qz.picks[id];if(p!=null)record(qIndex[id],p)}}
+  if(isExam(qz.mode)){for(const id of qz.ids){const p=qz.picks[id];if(p!=null&&qIndex[id])record(qIndex[id],p)}}
+  S.confirm=null;lsSet('ydus.exam','');
   qz.done=true;qz.dur=Math.round((Date.now()-qz.t0)/1000);
-  const n=qz.ids.length,r=qz.ids.filter(id=>qz.picks[id]===(qIndex[id]||{}).a).length;
-  if(S.active&&db&&!S.readOnly){const list=((S.exams[S.active]||{}).list||[]).slice(-29);list.push({at:today(),n,r,mode:qz.mode,dur:qz.dur});merge('exams/'+S.active,{list})}
+  if(qz.lim)qz.dur=Math.min(qz.dur,qz.lim);
+  const n=qz.ids.length,r=qz.ids.filter(id=>qz.picks[id]===(qIndex[id]||{}).a).length,w=Object.keys(qz.picks).length-r;
+  if(qz.mode==='ydus'){const pl=S.active?ydList(S.active):[];qz.prevNet=pl.length?pl[pl.length-1].net:null}
+  if(S.active&&db&&!S.readOnly){const e={at:today(),n,r,mode:qz.mode,dur:qz.dur};if(qz.mode==='ydus'){e.w=w;e.net=netOf(r,w)}
+    const list=((S.exams[S.active]||{}).list||[]).slice(-59);list.push(e);merge('exams/'+S.active,{list})}
   window.scrollTo({top:0});render()}
 function renderResults(){const qz=S.quiz,n=qz.ids.length;let r=0;const byT={};
   qz.ids.forEach(id=>{const q=qIndex[id];if(!q)return;const ok=qz.picks[id]===q.a;if(ok)r++;const t=byT[q.t]||(byT[q.t]={n:0,r:0});t.n++;if(ok)t.r++});
   const mm=Math.floor(qz.dur/60),ss=qz.dur%60;
+  if(qz.mode==='ydus')return renderYdusResults(byT,r);
   put('#quiz',`<div class="card"><span class="eyebrow">${qz.mode==='exam'?'DENEME SONUCU':'OTURUM SONUCU'}</span>
     <div class="row" style="align-items:baseline;gap:14px"><span class="score num">%${pct(r,n)}</span><span class="muted">${r} doğru · ${Object.keys(qz.picks).length-r} yanlış · ${n-Object.keys(qz.picks).length} boş</span></div>
     <p class="small muted">Süre ${mm} dk ${ss} sn · soru başına ${n?Math.round(qz.dur/n):0} sn</p>
     <div class="list">${Object.entries(byT).map(([t,x])=>`<div class="it"><div class="b">${esc(TMAP[t]?TMAP[t].name:t)}</div><span class="num small">${x.r}/${x.n}</span></div>`).join('')}</div>
     <div class="grid2"><button class="btn" data-act="newquiz">Yeni oturum</button><button class="btn plain" data-act="retrywrong" ${n-r?'':'disabled'}>Yanlışları tekrar çöz</button></div></div>
-   <div class="card rlist"><h3>Cevap anahtarı ve açıklamalar</h3>${qz.ids.map((id,i)=>{const q=qIndex[id];if(!q)return'';const p=qz.picks[id];const st=p==null?'e':p===q.a?'r':'w';
-    return `<details><summary><span class="mk ${st}">${i+1}</span><span class="clamp">${esc(q.s)}</span></summary><div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+   ${answerKey(qz)}`)}
+const answerKey=qz=>`<div class="card rlist"><h3>Cevap anahtarı ve açıklamalar</h3>${qz.ids.map((id,i)=>{const q=qIndex[id];if(!q)return'';const p=qz.picks[id];const st=p==null?'e':p===q.a?'r':'w';
+    return `<details><summary><span class="mk ${st}">${i+1}</span><span class="clamp">${(qz.flags||{})[id]?'<b style="color:var(--warn)">● </b>':''}${esc(q.s)}</span></summary><div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
      <div class="opts">${q.o.map((o,j)=>`<div class="opt ${j===q.a?'right':j===p?'wrong':''}"><span class="L">${L[j]}</span><span>${esc(o)}</span></div>`).join('')}</div>
-     ${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}</div></details>`}).join('')}</div>`)}
-let timerInt=null;function tick(){clearInterval(timerInt);const el=()=>$('#timer');const up=()=>{const e=el();if(!e||!S.quiz){clearInterval(timerInt);return}
-  const s=Math.round((Date.now()-S.quiz.t0)/1000),tgt=Math.round(S.quiz.ids.length*90);e.textContent=`${Math.floor(s/60)}:${pad(s%60)} / hedef ${Math.floor(tgt/60)} dk`};up();timerInt=setInterval(up,1000)}
+     ${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}</div></details>`}).join('')}</div>`;
+function renderYdusResults(byT,r){const qz=S.quiz,n=qz.ids.length,a=Object.keys(qz.picks).length,w=a-r,e=n-a,net=netOf(r,w),sc=ydScore(net),fl=qz.flags||{};
+  // what guessing on the "emin değilim" questions did to the net
+  let fr=0,fw=0;for(const id in fl){if(!fl[id]||qz.picks[id]==null)continue;if(qz.picks[id]===(qIndex[id]||{}).a)fr++;else fw++}
+  const fnet=netOf(fr,fw),mm=Math.floor(qz.dur/60),ss=qz.dur%60;
+  put('#quiz',`<div class="card"><span class="eyebrow">YDUS DENEMESİ SONUCU</span>
+    <div class="row" style="align-items:baseline;gap:12px;flex-wrap:wrap"><span class="score num">${sc}</span><span class="muted">yaklaşık YDUS puanı${qz.prevNet!=null?` · önceki ${ydScore(qz.prevNet)}`:''}</span></div>
+    <div class="kpis"><div><b class="num">${net.toFixed(2).replace('.',',')}</b><span>net</span></div><div><b class="num" style="color:var(--good)">${r}</b><span>doğru</span></div><div><b class="num" style="color:var(--bad)">${w}</b><span>yanlış · ${e} boş</span></div></div>
+    <p class="small muted">Net = doğru − yanlış/4. Puan, netin ${YD.n} üzerinden 100'e çevrilmesiyle hesaplanan yaklaşık bir değerdir; yerleştirme için en az ${YD.pass} puan gerekir. Süre ${mm} dk ${ss} sn.</p>
+    ${fr+fw?`<div class="banner">"Emin değilim" dediğin ${fr+fw} sorudan ${fr} doğru, ${fw} yanlış. Bu tahminler netine <b>${fnet>=0?'+':''}${fnet.toFixed(2).replace('.',',')}</b> ekledi${fnet<0?'; bu tür sorularda boş bırakmak daha iyi olurdu':''}.</div>`:''}
+    <div class="list">${Object.entries(byT).map(([t,x])=>`<div class="it"><div class="b">${esc(TMAP[t]?TMAP[t].name:t)}</div>${heat(x.r,x.n)}<span class="num small" style="min-width:36px;text-align:right">${x.r}/${x.n}</span></div>`).join('')}</div>
+    <div class="grid2"><button class="btn" data-act="newquiz">Kapat</button><button class="btn plain" data-act="retrywrong" ${w+e?'':'disabled'}>Yanlış ve boşları çöz</button></div></div>
+   ${answerKey(qz)}`)}
+let timerInt=null;function tick(){clearInterval(timerInt);const up=()=>{const e=$('#timer'),qz=S.quiz;if(!e||!qz||qz.done){clearInterval(timerInt);return}
+  const s=Math.round((Date.now()-qz.t0)/1000);
+  if(qz.lim){const l=Math.max(0,qz.lim-s);e.textContent=`Kalan ${Math.floor(l/60)}:${pad(l%60)}`;e.classList.toggle('low',l<=600)}
+  else{const tgt=Math.round(qz.ids.length*90);e.textContent=`${Math.floor(s/60)}:${pad(s%60)} / hedef ${Math.floor(tgt/60)} dk`}};up();timerInt=setInterval(up,1000)}
+// the YDUS clock keeps running on other tabs and through a reload
+setInterval(()=>{const qz=S.quiz;if(!qz||qz.done||!qz.lim||S.dbState==='loading')return;if(Date.now()>=qz.t0+qz.lim*1000){finishQuiz();toast('Süre doldu, deneme bitti.')}},1000);
 
 /* ---------- cards ---------- */
 function nextSrs(s,g){let{i=0,e=2.5,r=0}=s||{};
@@ -489,7 +580,7 @@ function renderCards(){
     return put('#cards',`${tabs}<div class="card"><div class="row between"><h2>Sınav incileri</h2><span class="small muted num">${list.length} bilgi</span></div>
       <p class="small muted">Sınavdan önceki son günlerde hızlıca gözden geçirmek için her sorunun akılda kalacak özü.</p>
       <select id="pearlTopic" aria-label="Konu">${topicOpts(t,true)}</select>
-      <div class="pearls">${list.map(q=>`<div class="pi"><span class="tag" style="align-self:flex-start">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span><span><mark style="background:linear-gradient(transparent 60%,var(--hl) 60%);color:inherit">${esc(q.p)}</mark></span></div>`).join('')}</div></div>`)}
+      <div class="pearls">${list.map(q=>`<div class="pi"><span class="tag" style="align-self:flex-start">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span><span>${esc(q.p)}</span></div>`).join('')}</div></div>`)}
   if(!pid)return put('#cards',`${tabs}<div class="empty">Kartlar her profile özeldir. Önce profil seç.<br><br><button class="btn" data-act="whopick">Profil seç</button></div>`);
   const st=S.study;
   if(!st){const due=dueList(pid).length,total=Object.keys(deck(pid)).filter(k=>qIndex[k]).length;
@@ -514,25 +605,85 @@ function spark(pid){const dd=days(pid),N=21,t=today(),v=[];for(let i=N-1;i>=0;i-
   const max=Math.max(10,...v),W=300,H=56,bw=W/N;
   return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Son 21 günde çözülen soru">${v.map((x,i)=>{const h=x?Math.max(3,x/max*(H-14)):2;return `<rect x="${(i*bw+1.5).toFixed(1)}" y="${(H-h-12).toFixed(1)}" width="${(bw-3).toFixed(1)}" height="${h.toFixed(1)}" rx="2" fill="${x?pColor(pid):'var(--sunk)'}"/>`}).join('')}
   <text x="0" y="${H-1}" font-size="9" fill="var(--muted)">21 gün önce</text><text x="${W}" y="${H-1}" font-size="9" text-anchor="end" fill="var(--muted)">bugün</text></svg>`}
+// YDUS deneme scores over time, one line per profile, with the placement threshold
+function ydTrend(){const ps=S.profiles.map(p=>({p,l:ydList(p.id).slice(-15)})).filter(x=>x.l.length);
+  if(!ps.length)return `<div class="card"><h3>YDUS denemeleri</h3><p class="muted small">Soru çöz sekmesinden ilk YDUS denemeni (${YD.n} soru, ${YD.min} dk) çözünce puan gelişimin burada çizilir.</p><button class="btn soft sm" data-act="ydus" style="align-self:flex-start">Denemeye başla</button></div>`;
+  const N=Math.max(...ps.map(x=>x.l.length)),ds=ps.flatMap(x=>x.l.map(e=>e.at)).sort(),d0=ds[0],span=Math.max(1,dayDiff(d0,ds[ds.length-1]));
+  // x follows the exam date so both profiles share one time axis
+  const W=320,H=150,L0=26,R0=8,T0=8,B0=18,x=at=>L0+(W-L0-R0)*(ds.length<2||d0===ds[ds.length-1]?.5:dayDiff(d0,at)/span),y=v=>T0+(H-T0-B0)*(1-v/100);
+  const grid=[0,25,50,75,100].map(v=>`<line x1="${L0}" x2="${W-R0}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L0-5}" y="${y(v)+3}" font-size="9" text-anchor="end" fill="var(--muted)">${v}</text>`).join('');
+  const pass=`<line x1="${L0}" x2="${W-R0}" y1="${y(YD.pass)}" y2="${y(YD.pass)}" stroke="var(--warn)" stroke-dasharray="4 3"/><text x="${W-R0}" y="${y(YD.pass)-4}" font-size="9" text-anchor="end" fill="var(--warn)">baraj ${YD.pass}</text>`;
+  const lines=ps.map(({p,l})=>{const pts=l.map(e=>[x(e.at),y(ydNum(e.net))]);const c=pColor(p.id);
+    return `<polyline points="${pts.map(q=>q.join(',')).join(' ')}" fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round"/>${pts.map((q,i)=>`<circle cx="${q[0]}" cy="${q[1]}" r="3.5" fill="${c}"><title>${esc(p.name)} · ${fmtD(l[i].at)} · ${ydScore(l[i].net)} puan</title></circle>`).join('')}`}).join('');
+  const last=ps.map(({p,l})=>{const e=l[l.length-1];return `<div><b class="num" style="color:${pColor(p.id)}">${ydScore(e.net)}</b><span>${esc(p.name)} · son · net ${e.net.toFixed(1).replace('.',',')}</span></div>`}).join('');
+  return `<div class="card"><div class="row between"><h3>YDUS denemeleri</h3><span class="small muted">son ${N} deneme</span></div>
+   <div class="kpis" style="grid-template-columns:repeat(${Math.min(3,ps.length)},1fr)">${last}</div>
+   <svg class="trend" viewBox="0 0 ${W} ${H}" role="img" aria-label="YDUS deneme puanlarının gelişimi">${grid}${pass}${lines}<text x="${L0}" y="${H-3}" font-size="9" fill="var(--muted)">${fmtD(d0)}</text><text x="${W-R0}" y="${H-3}" font-size="9" text-anchor="end" fill="var(--muted)">${fmtD(ds[ds.length-1])}</text></svg>
+   ${ps.length>1?`<div class="legend">${ps.map(({p})=>`<span><i style="background:${pColor(p.id)}"></i>${esc(p.name)}</span>`).join('')}</div>`:''}</div>`}
 function heat(r,n){if(!n)return '<span class="heat muted">–</span>';const p=r/n;const bg=p>=.7?'var(--good-soft)':p>=.5?'var(--warn-soft)':'var(--bad-soft)',fg=p>=.7?'var(--good)':p>=.5?'var(--warn)':'var(--bad)';return `<span class="heat" style="background:${bg};color:${fg}">%${pct(r,n)}</span>`}
 function renderStats(){
   if(!S.profiles.length)return put('#stats','<div class="empty">Profil ekleyince analiz burada görünür.</div>');
   const cards=S.profiles.map(p=>{const s=pStats(p.id);return `<div class="card"><div class="row between"><span class="row" style="gap:8px">${avatar(p.id)}<b>${esc(p.name)}</b></span><span class="small muted">${s.streak} gün seri</span></div>
    <div class="grid2"><div><span class="eyebrow">ÇÖZÜLEN</span><div class="score num" style="font-size:1.7rem">${s.n}</div><span class="small muted">/ ${ALLQ().length} soru</span></div>
    <div><span class="eyebrow">BAŞARI</span><div class="score num" style="font-size:1.7rem">%${pct(s.r,s.n)}</div><span class="small muted">son cevaplara göre</span></div></div>${spark(p.id)}</div>`}).join('');
+  const trend=ydTrend();
   const weak=S.active?TOPICS.map(t=>({t,...topicStats(S.active,t.id)})).filter(x=>x.n>=3).sort((a,b)=>a.r/a.n-b.r/b.n).slice(0,3):[];
-  put('#stats',`${cards}
+  put('#stats',`${trend}${cards}
    ${weak.length?`<div class="card"><h3>${esc(pName(S.active))} için en zayıf konular</h3><div class="list">${weak.map(x=>`<div class="it"><div class="b">${esc(x.t.name)} ${heat(x.r,x.n)}</div><button class="btn soft sm" data-act="quicktopic" data-t="${x.t.id}">Çalış</button></div>`).join('')}</div></div>`:''}
    <div class="card"><h3>Konu bazında başarı</h3><div class="tablewrap"><table><thead><tr><th>KONU</th>${S.profiles.map(p=>`<th>${esc(p.name)}</th>`).join('')}</tr></thead><tbody>
    ${TOPICS.map(t=>`<tr><td>${esc(t.name)}</td>${S.profiles.map(p=>{const s=topicStats(p.id,t.id);return `<td>${heat(s.r,s.n)} <span class="small muted num">${s.n}/${s.tot}</span></td>`}).join('')}</tr>`).join('')}</tbody></table></div></div>`)}
+
+/* ---------- plan ---------- */
+function renderPlan(){
+  if(S.dbState==='loading')return put('#plan','<div class="empty">Yükleniyor…</div>');
+  const pid=S.active,P=plan(),t=today(),goal=+(S.settings.goal||DEF.goal);
+  const st=pid?pStats(pid):{n:0,r:0,todayQ:0};const total=ALLQ().length;
+  const wLeft=Math.max(0,Math.ceil(dayDiff(t,P.exam)/7)),inRev=P.cw>=P.rev.w0,pre=P.cw<0;
+  const cur=P.blocks.find(x=>P.cw>=x.w0&&P.cw<=x.w1);
+  const exp=expectedSolved(P),diff=st.n-exp;
+  const toRev=Math.max(1,dayDiff(t,P.rev.from)),need=Math.max(0,Math.ceil((total-st.n)/toRev));
+  const due=pid?dueList(pid).length:0;
+  const head=`<div class="card"><span class="eyebrow">${pre?'PLAN BAŞLAMADI':inRev?'GENEL TEKRAR DÖNEMİ':`KONU DÖNEMİ · HAFTA ${P.cw+1} / ${P.rev.w0}`}</span>
+    <h2>${wLeft} hafta kaldı</h2>
+    <div class="kpis"><div><b class="num">%${pct(st.n,total)}</b><span>bankanın ilk turu</span></div>
+     <div><b class="num" style="color:${!pid?'var(--muted)':diff>=0?'var(--good)':'var(--bad)'}">${pid?(diff>=0?'+':'')+diff:'–'}</b><span>${!pid?'profil seç':diff>=0?'soru öndesin':'soru gerisin'}</span></div>
+     <div><b class="num">${inRev?'–':need}</b><span>günlük yeni soru yeter</span></div></div>
+    ${pid&&!inRev?`<p class="small muted">Tekrar dönemine (${fmtD(P.rev.from)}) kadar bankanın ilk turunu bitirmek için günde ${need} yeni soru yeterli. Günlük hedefin ${goal}; kalanı yanlışlara ve tekrar kartlarına gider.${need>goal?' Hedefin ilk turu bitirmeye yetmiyor.':''}</p>`:''}
+    ${pid&&need>goal&&!inRev?`<button class="btn soft sm" data-act="plangoal" data-v="${Math.ceil(need/5)*5}" style="align-self:flex-start">Hedefi ${Math.ceil(need/5)*5} soru yap</button>`:''}</div>`;
+
+  // today's tasks
+  const tasks=[];const weak=pid?weakOrder(pid,cur&&cur.t.id).filter(x=>x.n>=3&&x.r/x.n<.7):[];
+  if(cur){const W=weekGoal(P,cur,pid),left=dayDiff(t,W.to)+1,share=Math.max(0,Math.ceil((W.goal-W.before)/left));
+    if(share)tasks.push({done:W.todayN>=share,b:`${esc(cur.t.name)}: ${share} soru`,s:`Bu haftanın konusu · bugün ${W.todayN} çözüldü`,act:`data-act="plannew" data-t="${cur.t.id}" data-n="${Math.max(5,share-W.todayN)}"`,btn:'Başla'})
+    else tasks.push({done:true,b:`${esc(cur.t.name)}: haftalık hedef tamam`,s:`${W.done}/${W.goal} soru`})}
+  if(inRev){const rw=revWeeks(P,pid).find(w=>t>=w.from&&t<=w.to);if(rw)rw.ts.forEach(x=>tasks.push({done:pid&&answeredIn(pid,x.t.id,t,t)>=10,b:`${esc(x.t.name)}: 10 soru`,s:x.n?`Başarı %${pct(x.r,x.n)} · zayıftan güçlüye tekrar`:'Henüz çözülmedi',act:`data-act="quicktopic" data-t="${x.t.id}"`,btn:'Başla'}));
+    const wk0=addDays(P.start,P.cw*7),ex=((S.exams[pid]||{}).list||[]).filter(e=>isExam(e.mode)&&e.n>=40&&e.at>=wk0).length;
+    tasks.push({done:ex>=2,b:'Haftada 2 deneme sınavı',s:`Bu hafta ${ex}/2 · ${YD.n} soru, ${YD.min} dakika`,act:'data-act="planexam"',btn:'Deneme'})}
+  if(weak.length&&!inRev){const w=weak[0],tn=answeredIn(pid,w.t.id,t,t);tasks.push({done:tn>=5,b:`Zayıf konu: ${esc(w.t.name)}, 5 soru`,s:`Başarı %${pct(w.r,w.n)} · bugün ${tn} çözüldü`,act:`data-act="quicktopic" data-t="${w.t.id}"`,btn:'Çalış'})}
+  tasks.push({done:pid&&!due,b:due?`${due} tekrar kartı`:'Tekrar kartları',s:due?'Bugün vadesi gelenler':'Bugün bekleyen kart yok',act:due?'data-act="gocards"':'',btn:'Kartlar'});
+  tasks.push({done:st.todayQ>=goal,b:`Günlük hedef: ${goal} soru`,s:`Bugün ${st.todayQ} soru çözüldü`});
+  const taskHtml=pid?`<div class="card"><div class="row between"><h3>Bugünün görevleri</h3><span class="small muted num">${tasks.filter(x=>x.done).length}/${tasks.length}</span></div><div>
+    ${tasks.map(x=>`<div class="task${x.done?' done':''}"><span class="ck" aria-hidden="true"></span><div class="b"><b>${x.b}</b><br><span class="small muted">${x.s}</span></div>${x.act&&!x.done?`<button class="btn soft sm" ${x.act}>${x.btn}</button>`:''}</div>`).join('')}</div></div>`
+    :`<div class="card"><h3>Bugünün görevleri</h3><p class="muted">Görevlerini görmek için önce profilini seç.</p><button class="btn" data-act="whopick" style="align-self:flex-start">Profil seç</button></div>`;
+
+  // timeline
+  const blocks=P.blocks.map(b=>{const s=pid?topicStats(pid,b.t.id):{tot:tCount(b.t.id),n:0,r:0};const now=cur===b,past=P.cw>b.w1;
+    const flag=past&&s.n>=3&&s.r/s.n<.6?' <span class="tag" style="background:var(--bad-soft);color:var(--bad)">tekrar gerek</span>':past&&s.n<s.tot*.8?' <span class="tag olasi">eksik kaldı</span>':'';
+    return `<div class="blk${now?' now':''}${past?' past':''}"><span class="nm"><b>${esc(b.t.name)}</b>${now?' <span class="tag sik">bu hafta</span>':''}${flag}<br><span class="small muted num">${fmtD(b.from)} – ${fmtD(b.to)} · ${b.w1-b.w0+1} hafta · haftada ~${Math.ceil(s.tot/(b.w1-b.w0+1))} soru</span></span>
+     <span class="small num" style="text-align:right">${s.n}/${s.tot}${s.n?`<br>${heat(s.r,s.n)}`:''}</span><span class="bar"><i style="width:${pct(s.n,s.tot)}%"></i></span></div>`}).join('');
+  const rws=revWeeks(P,pid);
+  const rev=`<div class="blk${inRev?' now':''}"><span class="nm"><b>Genel tekrar ve denemeler</b>${inRev?' <span class="tag sik">şu an</span>':''}<br><span class="small muted num">${fmtD(P.rev.from)} – ${fmtD(P.rev.to)} · ${rws.length} hafta</span></span><span></span>
+    <div class="small" style="grid-column:1/-1;display:flex;flex-direction:column;gap:4px;margin-top:4px">${rws.map(w=>`<span><span class="muted num">${fmtD(w.from)}:</span> ${w.ts.map(x=>esc(x.t.name)).join(', ')}</span>`).join('')}</div></div>`;
+  put('#plan',`${head}${taskHtml}
+   <div class="card"><div class="row between"><h3>Haftalık takvim</h3><span class="small muted">${fmtD(P.start)} – ${fmtD(P.exam)}</span></div>
+    <p class="small muted">Konu süreleri sınavdaki ağırlığa göre ayrıldı. Tekrar haftalarındaki konu sırası, başarı oranına göre her gün yeniden dizilir; zayıf konular önce gelir.</p><div>${blocks}${rev}</div></div>`)}
 
 /* ---------- more ---------- */
 function renderMore(){
   const se=$('#st-exam'),sg=$('#st-goal');if(document.activeElement!==se)se.value=S.settings.exam||DEF.exam;if(document.activeElement!==sg)sg.value=S.settings.goal||DEF.goal;
   put('#profList',S.profiles.map(p=>`<div class="it">${avatar(p.id)}<div class="b row"><input value="${esc(p.name)}" data-pname="${esc(p.id)}" aria-label="Profil adı" style="flex:1"><button class="btn plain sm" data-act="rename" data-id="${esc(p.id)}">Kaydet</button></div>${delBtn('prof',p.id)}</div>`).join('')||'<div class="empty">Henüz profil yok.</div>');
   put('#ownList',S.own.length?S.own.slice().sort((a,b)=>(b.at||'').localeCompare(a.at||'')).map(q=>`<div class="it"><div class="b"><span class="clamp">${esc(q.s)}</span><span class="small muted">${esc(TMAP[q.t]?TMAP[q.t].name:'')} · cevap ${L[q.a]}</span></div>${delBtn('q',q.id)}</div>`).join(''):'<div class="empty">Henüz kendi sorun yok.</div>');
-  const P=plan();
-  put('#planList',P.blocks.map(b=>{const now=P.cw>=b.w0&&P.cw<=b.w1;return `<div class="it"><div class="b"><b>${esc(b.t.name)}</b>${now?' <span class="tag olasi">bu hafta</span>':''}<br><span class="small muted num">${fmtD(b.from)} – ${fmtD(b.to)} · ${b.w1-b.w0+1} hafta</span></div></div>`}).join('')+`<div class="it"><div class="b"><b>Genel tekrar ve denemeler</b><br><span class="small muted num">${fmtD(P.rev.from)} – ${fmtD(P.rev.to)}</span></div></div>`)}
+}
 function delBtn(kind,id){const k=kind+':'+id;return S.confirm===k?`<button class="btn danger sm" data-act="del" data-kind="${kind}" data-id="${esc(id)}">Silinsin mi?</button>`:`<button class="btn plain sm" data-act="askdel" data-k="${esc(k)}">Sil</button>`}
 
 /* ---------- profile sheet ---------- */
@@ -561,18 +712,25 @@ document.addEventListener('click',e=>{
    case 'quickstar':startQuiz({topics:[],src:'all',status:'star',n:999,mode:'study'});break;
    case 'quicktopic':startQuiz({topics:[el.dataset.t],src:'all',status:'mix',n:10,mode:'study'});break;
    case 'gocards':S.cardsTab='review';go('cards');break;
+   case 'plannew':{const o={topics:[el.dataset.t],src:'all',status:'new',n:+(el.dataset.n||10),mode:'study'};if(!pool(o).length)o.status='mix';startQuiz(o);break}
+   case 'plangoal':{if(!canWrite())return;merge('settings/main',{goal:+el.dataset.v});toast('Günlük hedef '+el.dataset.v+' soru oldu');break}
+   case 'planexam':startYdus();break;
    case 'tpAll':S.setup.topics=[];render();break;
    case 'tp':{const t=el.dataset.t,ts=S.setup.topics;S.setup.topics=ts.includes(t)?ts.filter(x=>x!==t):ts.concat(t);render();break}
    case 'set':{const k=el.dataset.k;S.setup[k]=k==='n'?+el.dataset.v:el.dataset.v;render();break}
    case 'start':startQuiz({});break;
-   case 'pick':{const q=qIndex[qz.ids[qz.i]];qz.picks[q.id]=+el.dataset.i;render();break}
+   case 'pick':{const q=qIndex[qz.ids[qz.i]],v=+el.dataset.i;if(isExam(qz.mode)&&qz.picks[q.id]===v)delete qz.picks[q.id];else qz.picks[q.id]=v;render();break}
+   case 'flag':{const id=qz.ids[qz.i];qz.flags=qz.flags||{};qz.flags[id]=!qz.flags[id];render();break}
+   case 'ydus':startYdus();break;
+   case 'askfinish':S.confirm='finish';render();break;
+   case 'cancelfinish':S.confirm=null;render();break;
    case 'check':{const q=qIndex[qz.ids[qz.i]];if(qz.picks[q.id]==null)return;qz.checked[q.id]=true;record(q,qz.picks[q.id]);render();break}
    case 'nextq':qz.i++;window.scrollTo({top:0});render();break;
    case 'prevq':qz.i=Math.max(0,qz.i-1);window.scrollTo({top:0});render();break;
    case 'jump':qz.i=+el.dataset.i;window.scrollTo({top:0});render();break;
    case 'finish':finishQuiz();break;
-   case 'quitq':if(qz&&!qz.done&&Object.keys(qz.picks).length&&qz.mode==='exam'){finishQuiz()}else{S.quiz=null;render()}break;
-   case 'newquiz':S.quiz=null;render();break;
+   case 'quitq':if(qz&&!qz.done&&isExam(qz.mode)&&Object.keys(qz.picks).length){S.confirm='finish';render();setTimeout(()=>{const b=document.querySelector('[data-act=finish]');if(b)b.scrollIntoView({block:'center'})},50)}else{S.quiz=null;lsSet('ydus.exam','');render()}break;
+   case 'newquiz':S.quiz=null;lsSet('ydus.exam','');render();break;
    case 'retrywrong':{const ids=qz.ids.filter(id=>qz.picks[id]!==(qIndex[id]||{}).a);S.quiz={ids:shuffle(ids),i:0,picks:{},checked:{},mode:'study',t0:Date.now(),done:false};window.scrollTo({top:0});render();break}
    case 'star':{if(!S.active){S.sheet=true;render();return}if(!canWrite())return;const id=qz.ids[qz.i];merge('stars/'+S.active,{q:{[id]:!stars(S.active)[id]}});toast(stars(S.active)[id]?'İşaret kaldırıldı':'İşaretlendi');break}
    case 'ctab':S.cardsTab=el.dataset.v;render();break;
@@ -620,7 +778,8 @@ $('#addProf').addEventListener('submit',e=>{e.preventDefault();if(!canWrite())re
 document.querySelectorAll('select.topic-select').forEach(s=>s.innerHTML=topicOpts('',false));
 $('#qf-opts').innerHTML=L.split('').map(l=>`<label class="f" style="flex-direction:row;align-items:center;gap:8px"><b class="num" style="width:18px">${l})</b><input style="flex:1" aria-label="${l} şıkkı"></label>`).join('');
 S.active=lsGet('ydus.profile');
-{const s=lsGet('ydus.screen');go(['home','quiz','cards','stats','more'].includes(s)?s:'home')}
+try{const x=JSON.parse(lsGet('ydus.exam')||'null');if(x&&x.mode==='ydus'&&!x.done&&Array.isArray(x.ids)){S.quiz=x;lsSet('ydus.screen','quiz')}}catch(e){}
+{const s=lsGet('ydus.screen');go(['home','quiz','cards','plan','stats','more'].includes(s)?s:'home')}
 
 /* data */
 const mapDocs=s=>s.docs.map(d=>({id:d.id,...d.data()}));
