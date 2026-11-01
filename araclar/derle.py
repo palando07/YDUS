@@ -1,6 +1,7 @@
 """Soru bankasını derler ve uygulamayı oluşturur.
 
 sorular/bolum*.py -> sorular/bank.json -> app/index.html (app/sablon.html içindeki __BANK__ yerine)
+ozetler/*.py -> konu özetleri (__NOTES__ yerine)
 Çalıştırma: python3 araclar/derle.py
 """
 import collections, glob, json, os, random, re
@@ -38,7 +39,19 @@ for q in B:
 
 banka = json.dumps(B, ensure_ascii=False, separators=(',', ':'))
 open(os.path.join(KOK, 'sorular', 'bank.json'), 'w', encoding='utf-8').write(banka)
+# Konu özetleri: her dosya T(konu, kaynak) ve ardından S(başlık, anahtar kelimeler, metin) çağırır.
+NOTLAR = {}
+def T(t, kaynak):
+    NOTLAR[t] = {'src': kaynak, 'sec': []}
+    T.cur = t
+def S(h, k, b):
+    NOTLAR[T.cur]['sec'].append(dict(h=h, k=k, b=b.strip()))
+for yol in sorted(glob.glob(os.path.join(KOK, 'ozetler', '*.py'))):
+    exec(open(yol, encoding='utf-8').read(), {'T': T, 'S': S})
+notlar = json.dumps(NOTLAR, ensure_ascii=False, separators=(',', ':'))
+
 sablon = open(os.path.join(KOK, 'app', 'sablon.html'), encoding='utf-8').read()
 open(os.path.join(KOK, 'app', 'index.html'), 'w', encoding='utf-8').write(
-    sablon.replace('__BANK__', banka.replace('</', '<\\/')))
+    sablon.replace('__BANK__', banka.replace('</', '<\\/')).replace('__NOTES__', notlar.replace('</', '<\\/')))
 print(len(B), 'soru:', dict(sayac))
+print(sum(len(v['sec']) for v in NOTLAR.values()), 'özet bölümü:', {k: len(v['sec']) for k, v in NOTLAR.items()})

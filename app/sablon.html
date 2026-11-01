@@ -222,6 +222,25 @@ th{border-top:0;font-size:.72rem;letter-spacing:.06em;color:var(--muted)}
 .list .it:first-child{border-top:0}
 .list .it .b{flex:1;min-width:0;overflow-wrap:anywhere}
 details.fold>summary{cursor:pointer;font-weight:700;font-family:var(--f-display)}
+/* notes */
+.note{display:flex;flex-direction:column;gap:10px;line-height:1.55;font-size:.95rem}
+.note ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.note table{font-size:.86rem}
+.note td,.note th{vertical-align:top}
+.note tr:first-child td{font-size:.72rem;font-weight:700;letter-spacing:.04em;color:var(--muted);border-top:0}
+.note .nb{background:var(--primary-soft);border-left:3px solid var(--primary);border-radius:10px;padding:10px 12px}
+.note .nb b:first-child{color:var(--primary)}
+details.sec{border-top:1px solid var(--line);padding:12px 0}
+details.sec:first-of-type{border-top:0;padding-top:4px}
+details.sec>summary{cursor:pointer;font-weight:700;font-family:var(--f-display);list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary::after{content:"+";font-family:var(--f-mono);color:var(--muted);font-size:1.1rem}
+details.sec[open]>summary::after{content:"−"}
+details.sec[open]>summary{margin-bottom:10px}
+.notelink{display:flex;align-items:center;gap:8px;background:var(--sunk);border:0;border-radius:10px;padding:10px 12px;font:inherit;font-size:.9rem;color:var(--ink);cursor:pointer;text-align:left;width:100%}
+.notelink svg{width:18px;height:18px;flex:none;stroke:var(--primary);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.notelink span{flex:1;min-width:0}
+input[type=search]{width:100%}
 @media (prefers-reduced-motion:no-preference){.opt,.chip,.seg button{transition:background-color .12s,border-color .12s}}
 @media (min-width:640px){.qa{grid-template-columns:repeat(4,1fr)}}
 </style>
@@ -298,6 +317,7 @@ details.fold>summary{cursor:pointer;font-weight:700;font-family:var(--f-display)
 <div class="toast" id="toast" hidden></div>
 
 <script type="application/json" id="bankData">__BANK__</script>
+<script type="application/json" id="notesData">__NOTES__</script>
 <script>
 document.documentElement.lang='tr';
 const TOPICS=[
@@ -307,6 +327,7 @@ const TOPICS=[
  {id:'enf',name:'Enfeksiyon Hastalıkları',w:3},{id:'geri',name:'Geriatri, Allerji ve İmmünoloji',w:2}];
 const TMAP=Object.fromEntries(TOPICS.map(t=>[t.id,t]));
 const BANK=JSON.parse(document.getElementById('bankData').textContent);
+const NOTES=JSON.parse(document.getElementById('notesData').textContent);
 const DEF={start:'2026-10-26',exam:'2027-07-04',goal:30};
 const PCOL=['var(--p1)','var(--p2)','var(--p3)'];
 const L='ABCDE';
@@ -320,7 +341,7 @@ const GTAG={sik:'Sık sorulan tema',olasi:'Olası soru',kendi:'Kendi sorum'};
 
 const S={profiles:[],own:[],settings:{},answers:{},deck:{},stars:{},progress:{},exams:{},
   active:null,screen:'home',dbState:'loading',readOnly:false,loaded:{},
-  setup:{topics:[],src:'all',status:'mix',n:20,mode:'study'},quiz:null,cardsTab:'review',study:null,pearlTopic:'',confirm:null,sheet:null};
+  setup:{topics:[],src:'all',status:'mix',n:20,mode:'study'},quiz:null,cardsTab:'review',noteTopic:'',noteQuery:'',noteOpen:{},study:null,pearlTopic:'',confirm:null,sheet:null};
 let db=null;
 
 /* helpers */
@@ -456,9 +477,41 @@ function renderHome(){
      <button data-act="quickstar" ${nstar?'':'disabled'}><b class="num" style="color:var(--warn)">${nstar}</b><span>İşaretlediklerim</span></button>
    </div>
    ${cur?(()=>{const W=weekGoal(P,cur,pid);return `<div class="card"><span class="eyebrow">BU HAFTANIN KONUSU · ${fmtD(W.from)} – ${fmtD(W.to)}</span><div class="row between"><h3>${esc(cur.t.name)}</h3><span class="small muted num">${W.done>=W.goal?'hedef tamam':W.done+'/'+W.goal+' soru'}</span></div>
-     <span class="bar"><i style="width:${pct(Math.min(W.done,W.goal),W.goal)}%"></i></span><div class="row" style="gap:8px"><button class="btn soft sm" data-act="plannew" data-t="${cur.t.id}">10 soru çöz</button><button class="btn plain sm" data-go="plan">Planın tamamı</button></div></div>`})():wk?`<div class="card"><span class="eyebrow">ÇALIŞMA PLANI</span><p>${wk}</p><button class="btn plain sm" data-go="plan" style="align-self:flex-start">Planın tamamı</button></div>`:''}
+     <span class="bar"><i style="width:${pct(Math.min(W.done,W.goal),W.goal)}%"></i></span><div class="row" style="gap:8px"><button class="btn soft sm" data-act="plannew" data-t="${cur.t.id}">10 soru çöz</button><button class="btn plain sm" data-act="opennotes" data-t="${cur.t.id}">Konu özeti</button></div></div>`})():wk?`<div class="card"><span class="eyebrow">ÇALIŞMA PLANI</span><p>${wk}</p><button class="btn plain sm" data-go="plan" style="align-self:flex-start">Planın tamamı</button></div>`:''}
    ${S.profiles.length>1?`<div class="card"><div class="row between"><h3>İkimiz</h3><button class="btn plain sm" data-go="stats">Ayrıntılı analiz</button></div><div class="duo">${duo}</div></div>`:''}
    <div class="card"><div class="row between"><h3>Konular</h3><span class="small muted">Dokun, o konudan 10 soru gelsin</span></div><div>${topics}</div></div>`)}
+
+/* ---------- notes ---------- */
+const lower=s=>String(s||'').toLocaleLowerCase('tr');
+// tiny markup: "- " list, "| a | b |" table (first row is the header), "! " exam note, **bold**
+function noteHtml(txt){const out=[];let ul=null,tb=null;const inl=x=>esc(x).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+  const flush=()=>{if(ul){out.push('<ul>'+ul.map(x=>'<li>'+inl(x)+'</li>').join('')+'</ul>');ul=null}
+    if(tb){out.push('<div class="tablewrap"><table>'+tb.map(r=>'<tr>'+r.map(c=>'<td>'+inl(c)+'</td>').join('')+'</tr>').join('')+'</table></div>');tb=null}};
+  for(const raw of txt.split('\n')){const l=raw.trim();
+    if(l.startsWith('|')){if(ul)flush();(tb||(tb=[])).push(l.replace(/^\||\|$/g,'').split('|').map(c=>c.trim()));continue}
+    if(l.startsWith('- ')){if(tb)flush();(ul||(ul=[])).push(l.slice(2));continue}
+    flush();if(!l)continue;
+    out.push(l.startsWith('! ')?`<div class="nb"><b>Sınav notu: </b>${inl(l.slice(2))}</div>`:`<p>${inl(l)}</p>`)}
+  flush();return `<div class="note">${out.join('')}</div>`}
+// best matching summary section for a question, by keyword hits in stem, explanation and pearl
+// sections of the question's own topic get a bonus, but a better match elsewhere wins (endocarditis lives in cardiology)
+const noteCache={};
+function noteFor(q){if(q.id in noteCache)return noteCache[q.id];const txt=' '+lower(q.s+' '+q.e+' '+q.p)+' ';let best=null,score=1.9;
+  for(const t in NOTES)NOTES[t].sec.forEach((x,i)=>{let c=0;for(const k of x.k)if(txt.includes(lower(k)))c+=k.length>=4?2:1;if(c&&t===q.t)c+=1.5;if(c>score){score=c;best={t,i}}});
+  return noteCache[q.id]=best}
+function noteLink(q){const m=noteFor(q);return m?`<button class="notelink" data-act="note" data-t="${m.t}" data-i="${m.i}"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h6"/></svg><span>Konu özeti: <b>${esc(NOTES[m.t].sec[m.i].h)}</b></span><span class="muted">›</span></button>`:''}
+function noteResults(){const q=lower(S.noteQuery).trim();
+  if(q.length>=2){const hits=[];for(const t in NOTES)NOTES[t].sec.forEach((x,i)=>{if(lower(x.h+' '+x.k.join(' ')+' '+x.b).includes(q))hits.push({t,i,x})});
+    return hits.length?`<p class="small muted">${hits.length} bölüm bulundu</p>${hits.map(({t,i,x})=>`<details class="sec" open data-sec="${t}:${i}"><summary><span>${esc(x.h)} <span class="tag">${esc(TMAP[t].name)}</span></span></summary>${noteHtml(x.b)}</details>`).join('')}`:'<div class="empty">Bu aramayla eşleşen bölüm yok.</div>'}
+  const t=S.noteTopic||TOPICS[0].id,n=NOTES[t];if(!n)return '<div class="empty">Bu konunun özeti henüz yok.</div>';
+  return `${n.sec.map((x,i)=>`<details class="sec" data-sec="${t}:${i}" ${S.noteOpen[t+':'+i]?'open':''}><summary>${esc(x.h)}</summary>${noteHtml(x.b)}</details>`).join('')}
+   <div class="row" style="gap:8px;margin-top:6px"><button class="btn soft sm" data-act="plannew" data-t="${t}">Bu konudan 10 soru</button></div>
+   <p class="small muted">Dayanak: ${esc(n.src)}. Özetler sınav odaklıdır; klinik kararda güncel kılavuzun tam metni esas alınmalıdır.</p>`}
+function renderNotes(tabs){if(!S.noteTopic){const P=plan(),cur=P.blocks.find(x=>P.cw>=x.w0&&P.cw<=x.w1);S.noteTopic=cur?cur.t.id:TOPICS[0].id}
+  put('#cards',`${tabs}<div class="card"><div class="row between"><h2>Konu özetleri</h2><span class="small muted num">${Object.values(NOTES).reduce((a,n)=>a+n.sec.length,0)} bölüm</span></div>
+   <input type="search" id="noteQ" placeholder="Tüm özetlerde ara: ör. hiponatremi, ANCA, Forrest" value="${esc(S.noteQuery)}" aria-label="Özetlerde ara">
+   <select id="noteTopic" aria-label="Konu" ${lower(S.noteQuery).trim().length>=2?'disabled':''}>${topicOpts(S.noteTopic,false)}</select>
+   <div id="noteRes">${noteResults()}</div></div>`)}
 
 /* ---------- quiz ---------- */
 // questions per topic follow the exam weights; unsolved questions are drawn first
@@ -521,7 +574,7 @@ function renderQuiz(){
   tick()}
 function explain(q,ok){return `<div class="card"><span class="verdict ${ok?'ok':'no'}">${ok?'Doğru':'Yanlış'} · Doğru cevap ${L[q.a]}</span>
   ${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}
-  ${!ok?'<p class="small muted">Bu soru tekrar kartlarına eklendi.</p>':''}</div>`}
+  ${!ok?'<p class="small muted">Bu soru tekrar kartlarına eklendi.</p>':''}${noteLink(q)}</div>`}
 function record(q,pick){const pid=S.active;if(!pid||!db||S.readOnly)return;const ok=pick===q.a;const prev=ans(pid)[q.id]||{};
   merge('answers/'+pid,{q:{[q.id]:{n:(prev.n||0)+1,w:(prev.w||0)+(ok?0:1),last:ok?1:0,at:today()}}});
   bump('q');if(ok)bump('k');
@@ -549,7 +602,7 @@ function renderResults(){const qz=S.quiz,n=qz.ids.length;let r=0;const byT={};
 const answerKey=qz=>`<div class="card rlist"><h3>Cevap anahtarı ve açıklamalar</h3>${qz.ids.map((id,i)=>{const q=qIndex[id];if(!q)return'';const p=qz.picks[id];const st=p==null?'e':p===q.a?'r':'w';
     return `<details><summary><span class="mk ${st}">${i+1}</span><span class="clamp">${(qz.flags||{})[id]?'<b style="color:var(--warn)">● </b>':''}${esc(q.s)}</span></summary><div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
      <div class="opts">${q.o.map((o,j)=>`<div class="opt ${j===q.a?'right':j===p?'wrong':''}"><span class="L">${L[j]}</span><span>${esc(o)}</span></div>`).join('')}</div>
-     ${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}</div></details>`}).join('')}</div>`;
+     ${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}${noteLink(q)}</div></details>`}).join('')}</div>`;
 function renderYdusResults(byT,r){const qz=S.quiz,n=qz.ids.length,a=Object.keys(qz.picks).length,w=a-r,e=n-a,net=netOf(r,w),sc=ydScore(net),fl=qz.flags||{};
   // what guessing on the "emin değilim" questions did to the net
   let fr=0,fw=0;for(const id in fl){if(!fl[id]||qz.picks[id]==null)continue;if(qz.picks[id]===(qIndex[id]||{}).a)fr++;else fw++}
@@ -575,7 +628,8 @@ function nextSrs(s,g){let{i=0,e=2.5,r=0}=s||{};
   return{i,e:Math.round(e*100)/100,r}}
 function renderCards(){
   const pid=S.active;
-  const tabs=`<div class="seg"><button data-act="ctab" data-v="review" aria-pressed="${S.cardsTab==='review'}">Tekrar kartları</button><button data-act="ctab" data-v="pearls" aria-pressed="${S.cardsTab==='pearls'}">Sınav incileri</button></div>`;
+  const tabs=`<div class="seg"><button data-act="ctab" data-v="review" aria-pressed="${S.cardsTab==='review'}">Tekrar</button><button data-act="ctab" data-v="pearls" aria-pressed="${S.cardsTab==='pearls'}">İnciler</button><button data-act="ctab" data-v="notes" aria-pressed="${S.cardsTab==='notes'}">Özetler</button></div>`;
+  if(S.cardsTab==='notes')return renderNotes(tabs);
   if(S.cardsTab==='pearls'){const t=S.pearlTopic;const list=ALLQ().filter(q=>q.p&&(!t||q.t===t));
     return put('#cards',`${tabs}<div class="card"><div class="row between"><h2>Sınav incileri</h2><span class="small muted num">${list.length} bilgi</span></div>
       <p class="small muted">Sınavdan önceki son günlerde hızlıca gözden geçirmek için her sorunun akılda kalacak özü.</p>
@@ -596,7 +650,7 @@ function renderCards(){
   put('#cards',`<div class="qtop"><button class="iconbtn" data-act="endstudy" aria-label="Çık"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="bar"><i style="width:${pct(st.done,st.done+st.queue.length)}%"></i></div><span class="num small">${st.queue.length} kaldı</span></div>
    <div class="card"><div class="tagrow"><span class="tag">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span></div><div class="stem">${esc(q.s)}</div>
    <div class="opts">${q.o.map((o,i)=>`<div class="opt ${st.flip&&i===q.a?'right':''}"><span class="L">${L[i]}</span><span>${esc(o)}</span></div>`).join('')}</div></div>
-   ${st.flip?`<div class="card">${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}</div>
+   ${st.flip?`<div class="card">${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}${noteLink(q)}</div>
      <div class="grades"><button class="g0" data-act="grade" data-g="0">Bilemedim<small>${iv(0)}</small></button><button class="g1" data-act="grade" data-g="1">Zorlandım<small>${iv(1)}</small></button><button class="g2" data-act="grade" data-g="2">Bildim<small>${iv(2)}</small></button></div>`
     :`<button class="btn block" data-act="flip">Cevabı göster</button>`}`)}
 
@@ -688,6 +742,10 @@ function delBtn(kind,id){const k=kind+':'+id;return S.confirm===k?`<button class
 
 /* ---------- profile sheet ---------- */
 function renderSheet(){const o=$('#overlay');
+  if(S.sheet&&S.sheet.note){const[t,i]=S.sheet.note,x=NOTES[t].sec[i],k=t+':'+i;o.hidden=false;if(o.dataset.k===k)return;o.dataset.k=k;
+    o.innerHTML=`<div class="sheet" role="dialog" aria-label="Konu özeti"><div class="row between"><span class="eyebrow">${esc(TMAP[t].name.toLocaleUpperCase('tr'))} · KONU ÖZETİ</span><button class="iconbtn" data-act="closesheet" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+     <h2>${esc(x.h)}</h2>${noteHtml(x.b)}<div class="grid2"><button class="btn soft" data-act="opennotes" data-t="${t}" data-i="${i}">Konunun tüm özeti</button><button class="btn plain" data-act="closesheet">Soruya dön</button></div></div>`;return}
+  o.dataset.k='';
   const need=S.dbState==='ready'&&S.profiles.length>1&&!S.active;
   if(!S.sheet&&!need){o.hidden=true;return}
   o.hidden=false;o.innerHTML=`<div class="sheet" role="dialog" aria-label="Profil seç"><h2>Kim çalışıyor?</h2><p class="small muted">İlerleme, yanlışlar ve kartlar her profil için ayrı tutulur.</p>
@@ -705,6 +763,9 @@ document.addEventListener('click',e=>{
   switch(a){
    case 'whopick':S.sheet=true;render();break;
    case 'closesheet':S.sheet=null;render();break;
+   case 'note':S.sheet={note:[el.dataset.t,+el.dataset.i]};render();break;
+   case 'opennotes':{const t=el.dataset.t;S.sheet=null;S.cardsTab='notes';S.noteTopic=t;S.noteQuery='';if(el.dataset.i!=null)S.noteOpen[t+':'+el.dataset.i]=true;go('cards');
+     if(el.dataset.i!=null)setTimeout(()=>{const d=document.querySelector(`[data-sec="${t}:${el.dataset.i}"]`);if(d)d.scrollIntoView({block:'start'})},60);break}
    case 'pickp':S.active=el.dataset.id;lsSet('ydus.profile',S.active);S.sheet=null;S.study=null;render();break;
    case 'quickmix':{const o={topics:[],src:'all',status:'new',n:20,mode:'study'};if(!pool(o).length)o.status='mix';startQuiz(o);break}
    case 'quickwrong':startQuiz({topics:[],src:'all',status:'wrong',n:999,mode:'study'});break;
@@ -746,7 +807,12 @@ document.addEventListener('click',e=>{
    case 'del':{if(!canWrite())return;const id=el.dataset.id;S.confirm=null;if(el.dataset.kind==='q')delDoc('questions/'+id);else{delDoc('profiles/'+id);if(S.active===id)S.active=null}toast('Silindi');render();break}
    case 'rename':{if(!canWrite())return;const v=document.querySelector(`[data-pname="${CSS.escape(el.dataset.id)}"]`).value.trim();if(v){merge('profiles/'+el.dataset.id,{name:v});toast('Kaydedildi')}break}
   }});
-document.addEventListener('change',e=>{if(e.target.id==='pearlTopic'){S.pearlTopic=e.target.value;e.target.blur();render()}});
+document.addEventListener('change',e=>{if(e.target.id==='pearlTopic'){S.pearlTopic=e.target.value;e.target.blur();render()}
+  if(e.target.id==='noteTopic'){S.noteTopic=e.target.value;e.target.blur();render()}});
+document.addEventListener('input',e=>{if(e.target.id==='noteQ'){S.noteQuery=e.target.value;$('#noteRes').innerHTML=noteResults();$('#noteTopic').disabled=lower(S.noteQuery).trim().length>=2}});
+// remember which summary sections are open across re-renders
+document.addEventListener('toggle',e=>{const d=e.target;if(d.dataset&&d.dataset.sec&&!lower(S.noteQuery).trim())S.noteOpen[d.dataset.sec]=d.open},true);
+$('#overlay').addEventListener('click',e=>{if(e.target.id==='overlay'&&S.sheet&&S.sheet.note){S.sheet=null;render()}});
 window.addEventListener('scroll',()=>$('#top').classList.toggle('scrolled',scrollY>4),{passive:true});
 
 $('#qForm').addEventListener('submit',e=>{e.preventDefault();if(!canWrite())return;
