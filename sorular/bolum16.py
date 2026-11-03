@@ -224,9 +224,9 @@ Q('sivi','olasi',
  "TLS'de asemptomatik hipokalsemiye kalsiyum verme; alkalileştirme yok; rasburikaz (G6PD!).")
 Q('sivi','sik',
  "DKA ile gelen hastada glukoz 520 mg/dL, pH 7,08, serum potasyumu 3,0 mmol/L. İnsülin infüzyonuyla ilgili doğru yaklaşım hangisidir?",
- ["Hemen insülin başlanır","Potasyum ≥3,3 mmol/L olana kadar insülin ertelenir, önce sıvı ve potasyum verilir","İnsülin bolus yapılır, potasyum verilmez","Önce bikarbonat verilir","Potasyum hiçbir zaman verilmez"],1,
- "DKA'da total vücut potasyumu azalmıştır; insülin potasyumu hücre içine sokar ve ağır hipokalemiye, aritmiye yol açabilir. Potasyum <3,3 ise insülin ertelenir, önce sıvıyla birlikte potasyum (20-40 mEq/saat) verilir. Potasyum 3,3-5,2 ise her litre sıvıya potasyum eklenir; >5,2 ise potasyum verilmez ve 2 saatte bir izlenir.",
- "DKA: K <3,3 → insülini ertele, önce potasyum ver.")
+ ["Hemen insülin başlanır","Potasyum >3,5 mmol/L olana kadar insülin ertelenir, önce sıvı ve potasyum verilir","İnsülin bolus yapılır, potasyum verilmez","Önce bikarbonat verilir","Potasyum hiçbir zaman verilmez"],1,
+ "DKA'da total vücut potasyumu azalmıştır; insülin potasyumu hücre içine sokar ve ağır hipokalemiye, aritmiye yol açabilir. 2024 ADA/EASD uzlaşı raporuna göre potasyum <3,5 ise insülin ertelenir ve önce sıvıyla birlikte potasyum (yaklaşık 10 mmol/saat ile başlanarak) verilir. Potasyum <5,0 olduğunda sıvılara potasyum eklenir ve düzey 4-5 mmol/L'de tutulur; >5,0 ise potasyum verilmez ve sık izlenir. (Eski ADA 2009 eşiği 3,3 idi; kaynaklarda iki değeri de görebilirsiniz.)",
+ "DKA (ADA 2024): K <3,5 → insülini ertele, önce potasyum ver; K <5,0 → sıvıya K ekle.")
 Q('sivi','olasi',
  "Bir hastada Na 138, Cl 100, HCO3 10 mmol/L (normal anyon açığı 12, normal HCO3 24). Asit-baz bozukluğunun doğru yorumu hangisidir?",
  ["Saf yüksek anyon açıklı metabolik asidoz","Yüksek anyon açıklı metabolik asidoz + eşlik eden normal anyon açıklı metabolik asidoz","Yüksek anyon açıklı metabolik asidoz + metabolik alkaloz","Saf normal anyon açıklı asidoz","Respiratuvar alkaloz"],0,

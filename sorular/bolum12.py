@@ -199,7 +199,7 @@ Q('enf','olasi',
 Q('enf','sik',
  "Hemşire, HIV pozitif ve viral yükü bilinmeyen hastadan kanlı iğne batması yaşıyor; olaydan 3 saat geçmiş. Önerilen yaklaşım hangisidir?",
  ["Yalnızca yarayı yıkamak","Bazal HIV testi alıp hemen (72 saat içinde) 28 günlük üçlü antiretroviral profilaksi başlamak","6 hafta sonra test yapmak","Yalnızca HBV aşısı","Kaynak hastanın test sonucunu beklemek"],1,
- "Maruziyet sonrası profilaksi mümkün olan en kısa sürede, tercihen ilk saatlerde ve en geç 72 saat içinde başlanmalıdır; 72 saatten sonra yararı gösterilmemiştir. Önerilen rejim tenofovir/emtrisitabin ile birlikte bir integraz inhibitörü (dolutegravir veya raltegravir) olup 28 gün sürer. Bazal HIV testi alınır ve 6. hafta ile 3. ayda tekrarlanır. HBV ve HCV maruziyeti de değerlendirilmelidir. Kaynak hastanın viral yükü baskılı çıkarsa PEP kesilebilir.",
+ "Maruziyet sonrası profilaksi mümkün olan en kısa sürede, tercihen ilk saatlerde ve en geç 72 saat içinde başlanmalıdır; 72 saatten sonra yararı gösterilmemiştir. Önerilen rejim integraz inhibitörü temellidir (CDC 2025: bictegravir/emtrisitabin/TAF veya dolutegravir + tenofovir/emtrisitabin) ve 28 gün sürer. Bazal HIV testi alınır ve 6. hafta ile 3. ayda tekrarlanır. HBV ve HCV maruziyeti de değerlendirilmelidir. Kaynak hastanın viral yükü baskılı çıkarsa PEP kesilebilir.",
  "HIV PEP: en geç 72 saat, 28 gün, TDF/FTC + integraz inhibitörü.")
 Q('enf','olasi',
  "Yeni HIV tanısı alan hastada HBsAg ve HBV DNA pozitif. Antiretroviral rejimle ilgili doğru olan hangisidir?",

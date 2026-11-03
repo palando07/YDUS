@@ -319,7 +319,7 @@ Q('gastro','sik',
 Q('gastro','sik',
  "Ağır alkol kullanan hastada sarılık, ateş ve hassas hepatomegali var; bilirubin 12 mg/dL, Maddrey diskriminan fonksiyonu 48. Enfeksiyon ve GİS kanaması dışlandı. Önerilen tedavi ve yanıtın değerlendirilmesi hangisidir?",
  ["Pentoksifilin; 28. günde bilirubin","Prednizolon 40 mg/gün; 7. günde Lille skoru","Yalnızca destek tedavisi; MELD","N-asetilsistein tek başına; 3. gün","Acil karaciğer nakli; ilk gün"],1,
- "Ağır alkolik hepatitte (Maddrey ≥32 veya MELD >20) prednizolon 40 mg/gün 28 gün kısa dönem mortaliteyi azaltır (STOPAH). 7. günde Lille skoru >0,45 ise yanıtsızlık kabul edilir ve steroid kesilir. Steroid öncesi enfeksiyon, GİS kanaması ve böbrek yetmezliği değerlendirilmelidir. Pentoksifilin mortaliteyi azaltmamıştır. Alkolü bırakmak uzun dönem sağkalımın en önemli belirleyicisidir.",
+ "Ağır alkolik hepatitte (Maddrey ≥32 veya MELD >20) prednizolon 40 mg/gün 28 gün verilir; STOPAH'ta 28. gün mortalitesindeki azalma sınırda kaldı (p=0,06), meta-analizler 28 günlük yararı destekler, ancak 90 gün ve 1 yıllık sağkalıma etkisi yoktur. 7. günde Lille skoru >0,45 ise yanıtsızlık kabul edilir ve steroid kesilir. Steroid öncesi enfeksiyon, GİS kanaması ve böbrek yetmezliği değerlendirilmelidir. Pentoksifilin mortaliteyi azaltmamıştır. Alkolü bırakmak uzun dönem sağkalımın en önemli belirleyicisidir.",
  "Alkolik hepatit: Maddrey ≥32 → prednizolon 40 mg; 7. gün Lille >0,45 ise kes.")
 Q('gastro','sik',
  "Daha önce karaciğer hastalığı olmayan hastada 10 gün içinde sarılık, INR 2,3 ve konfüzyon gelişiyor. Etiyoloji parasetamol dışı. Doğru yaklaşım hangisidir?",

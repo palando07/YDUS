@@ -30,9 +30,9 @@ Q('onko','sik',
  "Trastuzumab kardiyotoksisitesi (tip II) doza bağımlı değildir, miyosit nekrozu yapmaz ve ilaç kesilince çoğu hastada sol ventrikül fonksiyonu düzelir. Tedavi boyunca 3 ayda bir ejeksiyon fraksiyonu izlenir. Antrasiklin kardiyotoksisitesi (tip I) ise kümülatif doza bağlı ve büyük ölçüde geri dönüşümsüzdür; ikisinin birlikte kullanımı riski artırır.",
  "Antrasiklin: doz bağımlı, kalıcı (deksrazoksan koruyucu). Trastuzumab: doz bağımsız, geri dönüşümlü.")
 Q('onko','olasi',
- "Hiç sigara içmemiş 55 yaşında kadında metastatik akciğer adenokarsinomu saptanıyor; tümörde EGFR ekson 19 delesyonu var. Birinci basamakta tercih edilmesi gereken tedavi hangisidir?",
- ["Platin bazlı kemoterapi","Osimertinib","Pembrolizumab monoterapisi","Krizotinib","Yalnızca palyatif radyoterapi"],1,
- "EGFR duyarlılaştırıcı mutasyonu (ekson 19 delesyonu, ekson 21 L858R) olan metastatik küçük hücreli dışı akciğer kanserinde birinci basamak tedavi üçüncü kuşak EGFR tirozin kinaz inhibitörü osimertinibdir (FLAURA). ALK füzyonunda alektinib, lorlatinib gibi ALK inhibitörleri kullanılır. Sürücü mutasyonu olan hastalarda immünoterapi monoterapisinin yararı sınırlıdır.",
+ "Hiç sigara içmemiş 48 yaşında kadında beyin metastazlı akciğer adenokarsinomu saptanıyor; tümörde EML4-ALK füzyonu var. Birinci basamakta tercih edilmesi gereken tedavi hangisidir?",
+ ["Platin bazlı kemoterapi","Alektinib veya lorlatinib (ikinci/üçüncü kuşak ALK inhibitörü)","Pembrolizumab monoterapisi","Osimertinib","Yalnızca palyatif radyoterapi"],1,
+ "ALK füzyonu olan metastatik küçük hücreli dışı akciğer kanserinde birinci basamak tedavi ikinci veya üçüncü kuşak ALK inhibitörüdür: alektinib (ALEX) ve lorlatinib (CROWN) krizotinibe göre progresyonsuz sağkalımı belirgin uzatır ve beyin metastazlarında da etkilidir. Lorlatinib hiperlipidemi ve nörokognitif yan etkiler yapabilir. Osimertinib EGFR mutasyonunda kullanılır. Sürücü mutasyonu olan hastalarda immünoterapi monoterapisinin yararı sınırlıdır.",
  "Akciğer adenokarsinomunda tedavi öncesi moleküler panel: EGFR, ALK, ROS1, BRAF, KRAS G12C, MET, RET, NTRK, PD-L1.")
 Q('onko','sik',
  "Lynch sendromu tanısı alan 25 yaşındaki hastada kolorektal kanser taraması nasıl yapılmalıdır?",

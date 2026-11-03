@@ -103,9 +103,9 @@ Q('endo','sik',
  "Çok yüksek prolaktin ama küçük yanıt: 'hook effect' olabilir; serumu dilüe ederek tekrar ölç.")
 Q('endo','sik',
  "Diyabetik ketoasidoz tanısı konan hastanın serum potasyum düzeyi 3,0 mEq/L. Tedavide doğru yaklaşım hangisidir?",
- ["Hemen IV insülin infüzyonu başlanmalı","Potasyum ≥3,3 mEq/L olana kadar insülin ertelenmeli ve potasyum replasmanı yapılmalı","Bikarbonat infüzyonu başlanmalı","Potasyum replasmanı insülinden sonra yapılmalı","Sıvı tedavisi ertelenmeli"],1,
- "DKA'da total vücut potasyumu azalmıştır; insülin potasyumu hücre içine sokarak ölümcül hipokalemiye yol açabilir. K <3,3 mEq/L ise önce sıvı ve potasyum verilir, insülin ertelenir. K 3,3-5,2 arasında insülinle birlikte potasyum verilir; K >5,2 ise potasyum verilmez ve 2 saatte bir izlenir. Bikarbonat yalnızca pH <6,9'da düşünülür.",
- "DKA potasyum eşikleri: <3,3 insülin bekle; 3,3-5,2 insülin + K; >5,2 K verme.")
+ ["Hemen IV insülin infüzyonu başlanmalı","Potasyum >3,5 mEq/L olana kadar insülin ertelenmeli ve potasyum replasmanı yapılmalı","Bikarbonat infüzyonu başlanmalı","Potasyum replasmanı insülinden sonra yapılmalı","Sıvı tedavisi ertelenmeli"],1,
+ "DKA'da total vücut potasyumu azalmıştır; insülin potasyumu hücre içine sokarak ölümcül hipokalemiye yol açabilir. 2024 ADA/EASD uzlaşı raporuna göre K <3,5 mEq/L ise önce sıvı ve potasyum verilir, insülin ertelenir. K <5,0 olduğunda insülinle birlikte sıvılara potasyum eklenir (hedef 4-5); K >5,0 ise potasyum verilmez ve sık izlenir. Eski ADA 2009 eşiği 3,3 idi. Bikarbonat yalnızca pH <6,9'da düşünülür.",
+ "DKA potasyum eşikleri (ADA 2024): <3,5 insülin bekle; 3,5-5,0 insülin + K; >5,0 K verme.")
 Q('endo','olasi',
  "Tip 2 diyabeti ve ejeksiyon fraksiyonu düşük kalp yetersizliği olan hastada glisemik kontrol için kardiyovasküler ve renal faydası en güçlü gösterilmiş ilaç grubu hangisidir?",
  ["Pioglitazon","Saksagliptin","SGLT2 inhibitörü","Sülfonilüre","İnsülin glarjin"],2,

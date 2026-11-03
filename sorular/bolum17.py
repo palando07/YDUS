@@ -268,7 +268,7 @@ Q('enf','sik',
  "Nörosifiliz/oküler sifiliz: IV penisilin G 10-14 gün; gebede alerji varsa desensitizasyon.")
 Q('enf','olasi',
  "Bronşektazisi olan, sigara içmeyen yaşlı kadında kronik öksürük ve BT'de orta lob ve lingulada nodüler bronşektazi var; üç ayrı balgam örneğinde Mycobacterium avium kompleksi üretiliyor. Doğru ifade hangisidir?",
- ["İzoniazid tek başına yeterlidir","Tek pozitif kültür tedavi için yeterlidir","Tanı klinik, radyolojik ve mikrobiyolojik kriterlere göre konur; tedavi makrolid + etambutol + rifampisin ile kültür negatifleşmesinden sonra en az 12 ay sürer","MAC bulaşıcıdır, hasta izole edilir","Tedavi 2 haftadır"],1,
+ ["İzoniazid tek başına yeterlidir","Tek pozitif kültür tedavi için yeterlidir","Tanı klinik, radyolojik ve mikrobiyolojik kriterlere göre konur; tedavi makrolid + etambutol + rifampisin ile kültür negatifleşmesinden sonra en az 12 ay sürer","MAC bulaşıcıdır, hasta izole edilir","Tedavi 2 haftadır"],2,
  "Tüberküloz dışı mikobakteri akciğer hastalığı tanısı için semptom, uygun radyoloji ve en az iki ayrı balgamda (veya bir bronkoskopik örnekte) üreme gerekir. Nodüler bronşektazik form ince yapılı yaşlı kadınlarda (Lady Windermere sendromu) tipiktir. Tedavi azitromisin + etambutol + rifampisindir (hafif nodüler hastalıkta haftada 3 gün); kavitelide amikasin eklenir. Kişiden kişiye bulaş kural olarak yoktur.",
  "MAC akciğer: ≥2 balgam kültürü; makrolid + etambutol + rifampisin, kültür negatifliğinden sonra ≥12 ay.")
 Q('enf','sik',
