@@ -340,7 +340,7 @@ const ydNum=net=>Math.max(0,Math.round(net/YD.n*1000)/10);
 const ydScore=net=>String(ydNum(net)).replace('.',',');
 const GTAG={sik:'Sık sorulan tema',olasi:'Olası soru',vaka:'Vaka sorusu',kendi:'Kendi sorum'};
 
-const S={profiles:[],own:[],settings:{},answers:{},deck:{},stars:{},progress:{},exams:{},
+const S={profiles:[],own:[],settings:{},answers:{},deck:{},stars:{},progress:{},exams:{},oturum:{},
   active:null,screen:'home',dbState:'loading',readOnly:false,loaded:{},
   setup:{topics:[],src:'all',status:'mix',n:20,mode:'study'},quiz:null,cardsTab:'review',noteTopic:'',noteQuery:'',noteOpen:{},study:null,pearlTopic:'',confirm:null,sheet:null};
 let db=null;
@@ -423,6 +423,29 @@ function put(sel,html){const el=$(sel);if(!el)return;const a=document.activeElem
   if(a&&el.contains(a)&&(/TEXTAREA|SELECT/.test(a.tagName)||(a.tagName==='INPUT'&&!['checkbox','radio','button'].includes(a.type))))return;el.innerHTML=html}
 const avatar=(pid,sz)=>`<span class="avatar" style="background:${pColor(pid)}${sz?';width:'+sz+'px;height:'+sz+'px':''}">${esc(initial(pName(pid)))}</span>`;
 
+/* ---------- yarım kalan oturum ---------- */
+const MODEAD={study:'Çalışma',exam:'Deneme sınavı',ydus:'YDUS denemesi'};
+let sessSig='',sessT=null;
+function sessData(qz){return{ids:qz.ids,i:qz.i,picks:qz.picks||{},checked:qz.checked||{},flags:qz.flags||{},mode:qz.mode,lim:qz.lim||0,
+  el:Math.round((Date.now()-qz.t0)/1000),saved:Date.now(),day:today()}}
+function writeSess(pid,d){lsSet('ydus.sess.'+pid,JSON.stringify(d));if(db&&!S.readOnly)enqueue('oturum/'+pid,()=>db.doc('oturum/'+pid).set(d))}
+function saveSess(now){const qz=S.quiz;if(!qz||qz.done)return;const pid=qz.pid||(qz.pid=S.active);if(!pid)return;
+  const sig=JSON.stringify([qz.ids.length,qz.i,qz.picks,qz.checked,qz.flags]);if(!now&&sig===sessSig)return;sessSig=sig;
+  clearTimeout(sessT);if(now)writeSess(pid,sessData(qz));else sessT=setTimeout(()=>{if(S.quiz===qz&&!qz.done)writeSess(pid,sessData(qz))},700)}
+function clearSess(pid){pid=pid||S.active;clearTimeout(sessT);sessSig='';if(!pid)return;lsSet('ydus.sess.'+pid,'');
+  if(S.oturum[pid])delete S.oturum[pid];if(db&&!S.readOnly)enqueue('oturum/'+pid,()=>db.doc('oturum/'+pid).delete())}
+function pendingSess(pid){if(!pid)return null;if(S.quiz&&!S.quiz.done&&(S.quiz.pid||S.active)===pid)return{...sessData(S.quiz),live:true};
+  let x=S.oturum[pid];if(!x||!Array.isArray(x.ids)){try{x=JSON.parse(lsGet('ydus.sess.'+pid)||'null')}catch(e){x=null}}
+  if(!x||!Array.isArray(x.ids))return null;const ids=x.ids.filter(id=>qIndex[id]);return ids.length?{...x,n:ids.length}:null}
+function sessDone(x){return x.mode==='study'?Object.keys(x.checked||{}).filter(k=>x.checked[k]).length:Object.keys(x.picks||{}).length}
+function resumeCard(){const x=pendingSess(S.active);if(!x)return '';const n=x.ids.length,d=sessDone(x);
+  const tm=x.lim?` · kalan ${Math.max(0,Math.round((x.lim-(x.el||0))/60))} dk`:'';
+  return `<div class="card resume"><span class="eyebrow">YARIM KALAN OTURUM</span><h2>Kaldığın yerden devam et</h2>
+   <p class="small muted">${MODEAD[x.mode]||'Oturum'} · ${d}/${n} soru ${x.mode==='study'?'çözüldü':'cevaplandı'} · ${x.i+1}. sorudasın${tm}${x.day&&x.day!==today()?' · '+fmtD(x.day):''}</p>
+   <div class="grid2"><button class="btn" data-act="resume">Devam et</button>${S.confirm==='dropsess'?'<button class="btn danger" data-act="dropsess">Silinsin mi?</button>':'<button class="btn plain" data-act="askdropsess">Bırak</button>'}</div></div>`}
+function resumeSess(){if(S.quiz&&!S.quiz.done){go('quiz');return}const x=pendingSess(S.active);if(!x)return;
+  const ids=x.ids.filter(id=>qIndex[id]);S.quiz={ids,i:Math.min(x.i||0,ids.length-1),picks:x.picks||{},checked:x.checked||{},flags:x.flags||{},mode:x.mode,
+   t0:Date.now()-(x.el||0)*1000,done:false,pid:S.active};if(x.lim)S.quiz.lim=x.lim;S.confirm=null;window.scrollTo({top:0});go('quiz')}
 function render(){
   const exam=S.settings.exam||DEF.exam,left=dayDiff(today(),exam);
   $('#countdown').textContent=left>=0?left+' gün':'tarih?';
@@ -440,7 +463,7 @@ function render(){
   if(S.screen==='stats')renderStats();
   if(S.screen==='more')renderMore();
   renderSheet();
-  if(S.quiz&&S.quiz.mode==='ydus'&&!S.quiz.done)lsSet('ydus.exam',JSON.stringify(S.quiz));
+  saveSess();
 }
 
 function ring(v,goal){const r=40,c=2*Math.PI*r,p=Math.min(1,goal?v/goal:0);
@@ -466,7 +489,7 @@ function renderHome(){
   const duo=S.profiles.map(p=>{const s=pStats(p.id);return `<div class="pc"><span class="nm">${avatar(p.id,24)}${esc(p.name)}</span>
     <span class="stat"><span class="muted">Bugün</span><b>${s.todayQ} soru</b></span><span class="stat"><span class="muted">Toplam</span><b>${s.n}</b></span>
     <span class="stat"><span class="muted">Başarı</span><b>%${pct(s.r,s.n)}</b></span><span class="stat"><span class="muted">Seri</span><b>${s.streak} gün</b></span></div>`}).join('');
-  put('#home',`
+  put('#home',`${resumeCard()}
    <div class="card"><div class="hero">${ring(st.todayQ,goal)}<div style="display:flex;flex-direction:column;gap:8px;min-width:0">
      <span class="eyebrow">GÜNÜN HEDEFİ</span>
      <h2>${st.todayQ>=goal?'Bugünkü hedef tamam.':pid?`Merhaba ${esc(pName(pid))}, hedefe ${goal-st.todayQ} soru kaldı.`:'Önce kim çalışıyor, onu seç.'}</h2>
@@ -521,7 +544,7 @@ function ydusSet(){const a=S.active?ans(S.active):{},sum=TOPICS.reduce((x,t)=>x+
   qt.slice().sort((x,y)=>y.t.w-x.t.w).forEach(x=>{if(rem>0){x.k++;rem--}});
   const ids=[];for(const{t,k}of qt){const all=shuffle(ALLQ().filter(q=>q.t===t.id));ids.push(...all.filter(q=>!a[q.id]).concat(all.filter(q=>a[q.id])).slice(0,k).map(q=>q.id))}
   return shuffle(ids)}
-function startYdus(){S.confirm=null;S.quiz={ids:ydusSet(),i:0,picks:{},checked:{},flags:{},mode:'ydus',lim:YD.min*60,t0:Date.now(),done:false};go('quiz')}
+function startYdus(){S.confirm=null;S.quiz={ids:ydusSet(),i:0,picks:{},checked:{},flags:{},mode:'ydus',lim:YD.min*60,t0:Date.now(),done:false,pid:S.active};go('quiz')}
 const ydList=pid=>(((S.exams[pid]||{}).list)||[]).filter(e=>e.mode==='ydus');
 function topicOpts(sel,all){return(all?'<option value="">Tüm konular</option>':'')+TOPICS.map(t=>`<option value="${t.id}"${t.id===sel?' selected':''}>${esc(t.name)}</option>`).join('')}
 function pool(o){const pid=S.active,a=pid?ans(pid):{},st=pid?stars(pid):{};
@@ -530,13 +553,13 @@ function pool(o){const pid=S.active,a=pid?ans(pid):{},st=pid?stars(pid):{};
 function startQuiz(o){S.setup={...S.setup,...o};const p=pool(S.setup);
   if(!p.length){toast('Bu seçime uyan soru yok.');return}
   const n=S.setup.n>=999?p.length:S.setup.n;
-  S.quiz={ids:shuffle(p.map(q=>q.id)).slice(0,n),i:0,picks:{},checked:{},mode:S.setup.mode,t0:Date.now(),done:false};go('quiz')}
+  S.quiz={ids:shuffle(p.map(q=>q.id)).slice(0,n),i:0,picks:{},checked:{},mode:S.setup.mode,t0:Date.now(),done:false,pid:S.active};go('quiz')}
 const seg=(name,val,items)=>`<div class="seg" role="group">${items.map(([v,l])=>`<button data-act="set" data-k="${name}" data-v="${v}" aria-pressed="${String(val)===String(v)}">${l}</button>`).join('')}</div>`;
 function renderQuiz(){
   const qz=S.quiz;
   if(!qz){const o=S.setup,n=pool(o).length;
     const hist=S.active?(((S.exams[S.active]||{}).list)||[]).slice(-5).reverse():[];
-    put('#quiz',`<div class="card ydus"><span class="eyebrow">GERÇEK SINAV FORMATI</span><h2>YDUS denemesi</h2>
+    put('#quiz',`${resumeCard()}<div class="card ydus"><span class="eyebrow">GERÇEK SINAV FORMATI</span><h2>YDUS denemesi</h2>
       <div class="facts"><span>${YD.n} soru</span><span>${YD.min} dakika</span><span>${YD.pen} yanlış 1 doğruyu götürür</span></div>
       <p class="small muted">Sorular konu ağırlığına göre seçilir, önce çözmediklerin gelir. Süre bitince deneme kendiliğinden kapanır. Sonda net ve yaklaşık YDUS puanın hesaplanır.</p>
       <button class="btn block" data-act="ydus">Denemeye başla</button></div>
@@ -582,7 +605,7 @@ function record(q,pick){const pid=S.active;if(!pid||!db||S.readOnly)return;const
   if(!ok&&!deck(pid)[q.id])merge('deck/'+pid,{c:{[q.id]:{i:0,e:2.5,r:0,d:addDays(today(),1)}}})}
 function finishQuiz(){const qz=S.quiz;
   if(isExam(qz.mode)){for(const id of qz.ids){const p=qz.picks[id];if(p!=null&&qIndex[id])record(qIndex[id],p)}}
-  S.confirm=null;lsSet('ydus.exam','');
+  S.confirm=null;clearSess(qz.pid);
   qz.done=true;qz.dur=Math.round((Date.now()-qz.t0)/1000);
   if(qz.lim)qz.dur=Math.min(qz.dur,qz.lim);
   const n=qz.ids.length,r=qz.ids.filter(id=>qz.picks[id]===(qIndex[id]||{}).a).length,w=Object.keys(qz.picks).length-r;
@@ -620,7 +643,8 @@ let timerInt=null;function tick(){clearInterval(timerInt);const up=()=>{const e=
   const s=Math.round((Date.now()-qz.t0)/1000);
   if(qz.lim){const l=Math.max(0,qz.lim-s);e.textContent=`Kalan ${Math.floor(l/60)}:${pad(l%60)}`;e.classList.toggle('low',l<=600)}
   else{const tgt=Math.round(qz.ids.length*90);e.textContent=`${Math.floor(s/60)}:${pad(s%60)} / hedef ${Math.floor(tgt/60)} dk`}};up();timerInt=setInterval(up,1000)}
-// the YDUS clock keeps running on other tabs and through a reload
+document.addEventListener('visibilitychange',()=>{if(document.hidden)saveSess(true)});
+// the YDUS clock runs while the exam is open; leaving with X pauses it
 setInterval(()=>{const qz=S.quiz;if(!qz||qz.done||!qz.lim||S.dbState==='loading')return;if(Date.now()>=qz.t0+qz.lim*1000){finishQuiz();toast('Süre doldu, deneme bitti.')}},1000);
 
 /* ---------- cards ---------- */
@@ -767,7 +791,7 @@ document.addEventListener('click',e=>{
    case 'note':S.sheet={note:[el.dataset.t,+el.dataset.i]};render();break;
    case 'opennotes':{const t=el.dataset.t;S.sheet=null;S.cardsTab='notes';S.noteTopic=t;S.noteQuery='';if(el.dataset.i!=null)S.noteOpen[t+':'+el.dataset.i]=true;go('cards');
      if(el.dataset.i!=null)setTimeout(()=>{const d=document.querySelector(`[data-sec="${t}:${el.dataset.i}"]`);if(d)d.scrollIntoView({block:'start'})},60);break}
-   case 'pickp':S.active=el.dataset.id;lsSet('ydus.profile',S.active);S.sheet=null;S.study=null;render();break;
+   case 'pickp':if(S.quiz&&!S.quiz.done&&(S.quiz.pid||S.active)!==el.dataset.id){saveSess(true);S.quiz=null}S.active=el.dataset.id;lsSet('ydus.profile',S.active);S.sheet=null;S.study=null;render();break;
    case 'quickmix':{const o={topics:[],src:'all',status:'new',n:20,mode:'study'};if(!pool(o).length)o.status='mix';startQuiz(o);break}
    case 'quickwrong':startQuiz({topics:[],src:'all',status:'wrong',n:999,mode:'study'});break;
    case 'quickunsolved':startQuiz({topics:[],src:'all',status:'new',n:20,mode:'study'});break;
@@ -791,9 +815,12 @@ document.addEventListener('click',e=>{
    case 'prevq':qz.i=Math.max(0,qz.i-1);window.scrollTo({top:0});render();break;
    case 'jump':qz.i=+el.dataset.i;window.scrollTo({top:0});render();break;
    case 'finish':finishQuiz();break;
-   case 'quitq':if(qz&&!qz.done&&isExam(qz.mode)&&Object.keys(qz.picks).length){S.confirm='finish';render();setTimeout(()=>{const b=document.querySelector('[data-act=finish]');if(b)b.scrollIntoView({block:'center'})},50)}else{S.quiz=null;lsSet('ydus.exam','');render()}break;
-   case 'newquiz':S.quiz=null;lsSet('ydus.exam','');render();break;
-   case 'retrywrong':{const ids=qz.ids.filter(id=>qz.picks[id]!==(qIndex[id]||{}).a);S.quiz={ids:shuffle(ids),i:0,picks:{},checked:{},mode:'study',t0:Date.now(),done:false};window.scrollTo({top:0});render();break}
+   case 'quitq':if(qz&&!qz.done){const pr=qz.i>0||Object.keys(qz.picks).length;if(pr&&(qz.pid||S.active)){saveSess(true);toast('Kaydedildi. Soru çöz ekranından kaldığın yerden devam edebilirsin.')}else clearSess(qz.pid)}S.quiz=null;S.confirm=null;render();break;
+   case 'newquiz':S.quiz=null;render();break;
+   case 'resume':resumeSess();break;
+   case 'askdropsess':S.confirm='dropsess';render();break;
+   case 'dropsess':S.confirm=null;clearSess(S.active);toast('Yarım kalan oturum silindi');render();break;
+   case 'retrywrong':{const ids=qz.ids.filter(id=>qz.picks[id]!==(qIndex[id]||{}).a);S.quiz={ids:shuffle(ids),i:0,picks:{},checked:{},mode:'study',t0:Date.now(),done:false,pid:S.active};window.scrollTo({top:0});render();break}
    case 'star':{if(!S.active){S.sheet=true;render();return}if(!canWrite())return;const id=qz.ids[qz.i];merge('stars/'+S.active,{q:{[id]:!stars(S.active)[id]}});toast(stars(S.active)[id]?'İşaret kaldırıldı':'İşaretlendi');break}
    case 'ctab':S.cardsTab=el.dataset.v;render();break;
    case 'startstudy':S.study={queue:dueList(S.active),flip:false,done:0};render();break;
@@ -845,7 +872,7 @@ $('#addProf').addEventListener('submit',e=>{e.preventDefault();if(!canWrite())re
 document.querySelectorAll('select.topic-select').forEach(s=>s.innerHTML=topicOpts('',false));
 $('#qf-opts').innerHTML=L.split('').map(l=>`<label class="f" style="flex-direction:row;align-items:center;gap:8px"><b class="num" style="width:18px">${l})</b><input style="flex:1" aria-label="${l} şıkkı"></label>`).join('');
 S.active=lsGet('ydus.profile');
-try{const x=JSON.parse(lsGet('ydus.exam')||'null');if(x&&x.mode==='ydus'&&!x.done&&Array.isArray(x.ids)){S.quiz=x;lsSet('ydus.screen','quiz')}}catch(e){}
+try{const x=JSON.parse(lsGet('ydus.exam')||'null');if(x&&x.mode==='ydus'&&!x.done&&Array.isArray(x.ids)&&S.active&&!lsGet('ydus.sess.'+S.active))lsSet('ydus.sess.'+S.active,JSON.stringify({...x,el:Math.round((Date.now()-x.t0)/1000),day:today()}));lsSet('ydus.exam','')}catch(e){}
 {const s=lsGet('ydus.screen');go(['home','quiz','cards','plan','stats','more'].includes(s)?s:'home')}
 
 /* data */
@@ -860,6 +887,7 @@ function onErr(e){if(e&&e.code==='revoked')S.dbState='none';schedule()}
     if(S.active&&!S.profiles.some(p=>p.id===S.active))S.active=null;if(!S.active&&S.profiles.length===1)S.active=S.profiles[0].id;loaded('profiles')},onErr);
   db.collection('questions').onSnapshot(s=>{S.own=mapDocs(s).filter(q=>q.s&&Array.isArray(q.o)).map(q=>({...q,g:'kendi'}));reindex();loaded('questions')},onErr);
   db.doc('settings/main').onSnapshot(s=>{S.settings=s.exists?s.data():{};loaded('settings')},onErr);
+  db.collection('oturum').onSnapshot(s=>{S.oturum=byId(s);schedule()},()=>{});
   for(const c of ['answers','deck','stars','progress','exams'])db.collection(c).onSnapshot(s=>{S[c]=byId(s);loaded(c)},onErr);
 })();
 setTimeout(()=>{if(S.dbState==='loading'&&!db){S.dbState='none';schedule()}},12000);
