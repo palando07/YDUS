@@ -151,6 +151,7 @@ body.welcome main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
 .welcome h2{margin-top:18px}
 .wl-people{display:flex;flex-direction:column;gap:10px}
 .wl-p{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--surface);font:inherit;color:var(--ink);cursor:pointer;text-align:left;transition:border-color .15s,transform .15s}
+button,.opt,[data-act]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .wl-p:hover{border-color:var(--primary)} .wl-p:active{transform:scale(.99)}
 .wl-p .avatar{font-size:1.2rem;flex-shrink:0}
 .wl-pn{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
@@ -497,7 +498,9 @@ function revWeeks(P,pid){const n=Math.max(1,Math.floor(dayDiff(P.rev.from,P.exam
 /* rendering */
 let rq=false;function schedule(){if(rq)return;rq=true;requestAnimationFrame(()=>{rq=false;render()})}
 function put(sel,html){const el=$(sel);if(!el)return;const a=document.activeElement;
-  if(a&&el.contains(a)&&(/TEXTAREA|SELECT/.test(a.tagName)||(a.tagName==='INPUT'&&!['checkbox','radio','button'].includes(a.type))))return;el.innerHTML=html}
+  if(a&&el.contains(a)&&(/TEXTAREA|SELECT/.test(a.tagName)||(a.tagName==='INPUT'&&!['checkbox','radio','button'].includes(a.type))))return;setH(el,html)}
+/* aynı içerik tekrar yazılmaz: iOS'ta dokunuş sırasında DOM değişince tıklama kayboluyordu */
+function setH(el,html){if(el._h===html&&el.innerHTML.length)return;el._h=html;el.innerHTML=html}
 const avatar=(pid,sz)=>`<span class="avatar" style="background:${pColor(pid)}${sz?';width:'+sz+'px;height:'+sz+'px':''}">${esc(initial(pName(pid)))}</span>`;
 
 /* ---------- yarım kalan oturum ---------- */
@@ -527,7 +530,7 @@ function render(){
   const exam=S.settings.exam||DEF.exam,left=dayDiff(today(),exam);
   $('#countdown').textContent=left>=0?left+' gün':'tarih?';
   $('#countdown').title='Sınava kalan gün ('+fmtD(exam)+')';
-  $('#whoBtn').innerHTML=S.active?`${avatar(S.active)}<span>${esc(pName(S.active))}</span>`:`<span class="avatar" style="background:var(--muted)">?</span><span>Profil seç</span>`;
+  setH($('#whoBtn'),S.active?`${avatar(S.active)}<span>${esc(pName(S.active))}</span>`:`<span class="avatar" style="background:var(--muted)">?</span><span>Profil seç</span>`);
   const b=$('#banner');
   if(S.dbState==='none'){b.hidden=false;b.textContent='Veri deposuna bağlanılamadı. Soruları çözebilirsin ama ilerlemen kaydedilmez. Sayfayı claude.ai üzerinden, giriş yapmış olarak aç.'}
   else if(S.readOnly){b.hidden=false;b.textContent='Bu sayfayı yalnızca görüntüleyebiliyorsun. Kaydetmek için sayfa sahibinden seni "Katkıda bulunan" olarak eklemesini iste.'}
@@ -879,14 +882,14 @@ function delBtn(kind,id){const k=kind+':'+id;return S.confirm===k?`<button class
 /* ---------- profile sheet ---------- */
 function renderSheet(){const o=$('#overlay');
   if(S.sheet&&S.sheet.note){const[t,i]=S.sheet.note,x=NOTES[t].sec[i],k=t+':'+i;o.hidden=false;if(o.dataset.k===k)return;o.dataset.k=k;
-    o.innerHTML=`<div class="sheet" role="dialog" aria-label="Konu özeti"><div class="row between"><span class="eyebrow">${esc(TMAP[t].name.toLocaleUpperCase('tr'))} · KONU ÖZETİ</span><button class="iconbtn" data-act="closesheet" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-     <h2>${esc(x.h)}</h2>${noteHtml(x.b)}<div class="grid2"><button class="btn soft" data-act="opennotes" data-t="${t}" data-i="${i}">Konunun tüm özeti</button><button class="btn plain" data-act="closesheet">Soruya dön</button></div></div>`;return}
+    setH(o,`<div class="sheet" role="dialog" aria-label="Konu özeti"><div class="row between"><span class="eyebrow">${esc(TMAP[t].name.toLocaleUpperCase('tr'))} · KONU ÖZETİ</span><button class="iconbtn" data-act="closesheet" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+     <h2>${esc(x.h)}</h2>${noteHtml(x.b)}<div class="grid2"><button class="btn soft" data-act="opennotes" data-t="${t}" data-i="${i}">Konunun tüm özeti</button><button class="btn plain" data-act="closesheet">Soruya dön</button></div></div>`);return}
   o.dataset.k='';
   const need=needPick()&&S.screen!=='home';
   if(!S.sheet&&!need){o.hidden=true;return}
-  o.hidden=false;o.innerHTML=`<div class="sheet" role="dialog" aria-label="Profil seç"><h2>Kim çalışıyor?</h2><p class="small muted">İlerleme, yanlışlar ve kartlar her profil için ayrı tutulur.</p>
+  o.hidden=false;setH(o,`<div class="sheet" role="dialog" aria-label="Profil seç"><h2>Kim çalışıyor?</h2><p class="small muted">İlerleme, yanlışlar ve kartlar her profil için ayrı tutulur.</p>
    ${S.profiles.map(p=>`<button class="pick" data-act="pickp" data-id="${esc(p.id)}">${avatar(p.id)}<span><b>${esc(p.name)}</b><br><span class="small muted">${pStats(p.id).n} soru çözdü</span></span></button>`).join('')||'<div class="empty">Henüz profil yok. Daha fazla sekmesinden ekle.</div>'}
-   ${S.sheet?'<button class="btn plain" data-act="closesheet">Kapat</button>':''}</div>`}
+   ${S.sheet?'<button class="btn plain" data-act="closesheet">Kapat</button>':''}</div>`)}
 
 /* ---------- actions ---------- */
 function go(s){S.screen=s;document.querySelectorAll('[data-screen]').forEach(x=>x.hidden=x.dataset.screen!==s);
@@ -916,7 +919,7 @@ document.addEventListener('click',e=>{
    case 'tp':{const t=el.dataset.t,ts=S.setup.topics;S.setup.topics=ts.includes(t)?ts.filter(x=>x!==t):ts.concat(t);render();break}
    case 'set':{const k=el.dataset.k;S.setup[k]=k==='n'?+el.dataset.v:el.dataset.v;render();break}
    case 'start':startQuiz({});break;
-   case 'pick':{const q=qIndex[qz.ids[qz.i]],v=+el.dataset.i;if(isExam(qz.mode)&&qz.picks[q.id]===v)delete qz.picks[q.id];else qz.picks[q.id]=v;render();break}
+   case 'pick':if(Date.now()-pickT>800)doPick(+el.dataset.i);break;
    case 'flag':{const id=qz.ids[qz.i];qz.flags=qz.flags||{};qz.flags[id]=!qz.flags[id];render();break}
    case 'ydus':startYdus();break;
    case 'askfinish':S.confirm='finish';render();break;
@@ -981,10 +984,14 @@ $('#addProf').addEventListener('submit',e=>{e.preventDefault();if(!canWrite())re
   addDoc('profiles',{name:v,order:Math.max(0,...S.profiles.map(p=>p.order||0))+1});$('#np-name').value='';toast('Profil eklendi')});
 
 /* yazı boyutu, kaydırma, klavye */
+let pickT=0;function doPick(v){const qz=S.quiz;if(!qz||qz.done)return;const q=qIndex[qz.ids[qz.i]];if(!q||(qz.checked&&qz.checked[q.id]))return;
+  if(isExam(qz.mode)&&qz.picks[q.id]===v)delete qz.picks[q.id];else qz.picks[q.id]=v;render()}
 S.fs=+(lsGet('ydus.fs')||0)%3||0;function applyFs(){document.documentElement.style.setProperty('--qfs',[1,1.12,1.25][S.fs])}applyFs();
 {let x0=null,y0=0,t0=0;const qa=()=>S.screen==='quiz'&&S.quiz&&!S.quiz.done;
  document.addEventListener('touchstart',e=>{if(!qa()||e.touches.length!==1||(e.target.closest&&e.target.closest('.dots,input,select,textarea'))){x0=null;return}x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now()},{passive:true});
  document.addEventListener('touchend',e=>{if(x0==null||!qa())return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;
+  const ob=e.target.closest&&e.target.closest('[data-act=pick]');
+  if(ob&&!ob.disabled&&Math.abs(dx)<12&&Math.abs(dy)<12&&Date.now()-t0<700){pickT=Date.now();doPick(+ob.dataset.i);return}
   if(Date.now()-t0>700||Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*2)return;
   const b=document.querySelector(dx<0?'[data-act=nextq]':'[data-act=prevq]');if(b&&!b.disabled)b.click()},{passive:true})}
 document.addEventListener('keydown',e=>{if(S.screen!=='quiz'||!S.quiz||S.quiz.done||e.metaKey||e.ctrlKey||e.altKey||e.target.closest('input,select,textarea'))return;
@@ -1013,7 +1020,7 @@ function onErr(e){if(e&&e.code==='revoked')S.dbState='none';schedule()}
     if(S.active&&!S.profiles.some(p=>p.id===S.active))S.active=null;if(!S.active&&S.profiles.length===1)S.active=S.profiles[0].id;loaded('profiles')},onErr);
   db.collection('questions').onSnapshot(s=>{S.own=mapDocs(s).filter(q=>q.s&&Array.isArray(q.o)).map(q=>({...q,g:'kendi'}));reindex();loaded('questions')},onErr);
   db.doc('settings/main').onSnapshot(s=>{S.settings=s.exists?s.data():{};loaded('settings')},onErr);
-  db.collection('oturum').onSnapshot(s=>{S.oturum=byId(s);schedule()},()=>{});
+  db.collection('oturum').onSnapshot(s=>{S.oturum=byId(s);if(!(S.quiz&&!S.quiz.done&&S.screen==='quiz'))schedule()},()=>{});
   for(const c of ['answers','deck','stars','progress','exams'])db.collection(c).onSnapshot(s=>{S[c]=byId(s);loaded(c)},onErr);
 })();
 setTimeout(()=>{if(S.dbState==='loading'&&!db){S.dbState='none';schedule()}},12000);
