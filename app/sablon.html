@@ -282,6 +282,12 @@ mark{background:none;color:inherit}
 .g2{background:var(--good-soft);color:var(--good);border-color:var(--good)!important}
 .pearls .pi{padding:12px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
 .pearls .pi:first-child{border-top:0}
+.pfcard{min-height:300px;touch-action:pan-y}
+.pfp{font-size:calc(1.22rem * var(--qfs));line-height:1.5;font-weight:600;background:var(--hl-soft);border-radius:14px;padding:18px 16px;color:var(--ink)}
+.pfq{display:flex;flex-direction:column;gap:8px}.pfq p{margin:0;font-size:calc(.95rem * var(--qfs));line-height:1.5}
+.pfnav{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.pfnav .iconbtn.on svg{fill:var(--hl);stroke:var(--warn)}
+.linkbtn{border:0;background:none;color:var(--primary);font:inherit;font-weight:600;cursor:pointer;padding:6px 0}
 
 /* analysis */
 .tablewrap{overflow-x:auto}
@@ -420,7 +426,7 @@ const GTAG={sik:'Sık sorulan tema',olasi:'Olası soru',vaka:'Vaka sorusu',lab:'
 
 const S={profiles:[],own:[],settings:{},answers:{},deck:{},stars:{},progress:{},exams:{},oturum:{},
   active:null,screen:'home',dbState:'loading',readOnly:false,loaded:{},
-  setup:{topics:[],src:'all',status:'mix',n:20,mode:'study'},quiz:null,cardsTab:'review',noteTopic:'',noteQuery:'',noteOpen:{},study:null,pearlTopic:'',confirm:null,sheet:null};
+  setup:{topics:[],src:'all',status:'mix',n:20,mode:'study'},quiz:null,cardsTab:'review',noteTopic:'',noteQuery:'',noteOpen:{},study:null,confirm:null,sheet:null};
 let db=null;
 
 /* helpers */
@@ -769,11 +775,7 @@ function renderCards(){
   const pid=S.active;
   const tabs=`<div class="seg"><button data-act="ctab" data-v="review" aria-pressed="${S.cardsTab==='review'}">Tekrar</button><button data-act="ctab" data-v="pearls" aria-pressed="${S.cardsTab==='pearls'}">İnciler</button><button data-act="ctab" data-v="notes" aria-pressed="${S.cardsTab==='notes'}">Özetler</button></div>`;
   if(S.cardsTab==='notes')return renderNotes(tabs);
-  if(S.cardsTab==='pearls'){const t=S.pearlTopic;const list=ALLQ().filter(q=>q.p&&(!t||q.t===t));
-    return put('#cards',`${tabs}<div class="card"><div class="row between"><h2>Sınav incileri</h2><span class="small muted num">${list.length} bilgi</span></div>
-      <p class="small muted">Sınavdan önceki son günlerde hızlıca gözden geçirmek için her sorunun akılda kalacak özü.</p>
-      <select id="pearlTopic" aria-label="Konu">${topicOpts(t,true)}</select>
-      <div class="pearls">${list.map(q=>`<div class="pi"><span class="tag" style="align-self:flex-start">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span><span>${esc(q.p)}</span></div>`).join('')}</div></div>`)}
+  if(S.cardsTab==='pearls')return renderPearls(tabs);
   if(!pid)return put('#cards',`${tabs}<div class="empty">Kartlar her profile özeldir. Önce profil seç.<br><br><button class="btn" data-act="whopick">Profil seç</button></div>`);
   const st=S.study;
   if(!st){const due=dueList(pid).length,total=Object.keys(deck(pid)).filter(k=>qIndex[k]).length;
@@ -792,6 +794,33 @@ function renderCards(){
    ${st.flip?`<div class="card">${q.e?`<p class="expl">${esc(q.e)}</p>`:''}${q.p?`<div class="pearl"><span class="eyebrow">SINAV İNCİSİ</span><mark>${esc(q.p)}</mark></div>`:''}${noteLink(q)}</div>
      <div class="grades"><button class="g0" data-act="grade" data-g="0">Bilemedim<small>${iv(0)}</small></button><button class="g1" data-act="grade" data-g="1">Zorlandım<small>${iv(1)}</small></button><button class="g2" data-act="grade" data-g="2">Bildim<small>${iv(2)}</small></button></div>`
     :`<button class="btn block" data-act="flip">Cevabı göster</button>`}`)}
+
+/* ---------- inci akışı ---------- */
+S.pf={t:'',src:'all',sh:false,seed:1,i:0,view:'flow',show:false};
+try{Object.assign(S.pf,JSON.parse(lsGet('ydus.pf')||'{}'),{show:false})}catch(e){}
+function savePf(){const p=S.pf;lsSet('ydus.pf',JSON.stringify({t:p.t,src:p.src,sh:p.sh,seed:p.seed,i:p.i,view:p.view}))}
+function hashN(s){let h=2166136261;for(let k=0;k<s.length;k++){h^=s.charCodeAt(k);h=Math.imul(h,16777619)}return h>>>0}
+function pfList(){const p=S.pf,pid=S.active,a=pid?ans(pid):{},st=pid?stars(pid):{};
+  let l=ALLQ().filter(q=>q.p&&(!p.t||q.t===p.t)&&(p.src==='all'||(p.src==='wrong'&&a[q.id]&&a[q.id].last===0)||(p.src==='star'&&st[q.id])||(p.src==='new'&&!a[q.id])));
+  if(p.sh)l=l.map(q=>[hashN(q.id+':'+p.seed),q]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);return l}
+function renderPearls(tabs){const p=S.pf,l=pfList(),n=l.length;if(p.i>=n)p.i=Math.max(0,n-1);
+  const head=`<div class="card"><div class="row between"><h2>Sınav incileri</h2><div class="seg" style="min-width:150px"><button data-act="pfview" data-v="flow" aria-pressed="${p.view==='flow'}">Akış</button><button data-act="pfview" data-v="list" aria-pressed="${p.view==='list'}">Liste</button></div></div>
+    <p class="small muted">Her sorunun akılda kalacak özü. Nöbet arasında kısa tekrar için kartları kaydırarak geç.</p>
+    <div class="grid2"><select id="pearlTopic" aria-label="Konu">${topicOpts(p.t,true)}</select><select id="pearlSrc" aria-label="Kaynak">${[['all','Tüm inciler'],['wrong','Yanlışlarım'],['star','İşaretliler'],['new','Çözmediklerim']].map(([v,x])=>`<option value="${v}"${p.src===v?' selected':''}>${x}</option>`).join('')}</select></div></div>`;
+  if(!n)return put('#cards',`${tabs}${head}<div class="empty">${p.src==='all'?'Bu konuda inci yok.':S.active?'Bu seçime uyan inci yok.':'Bu filtre için önce profil seç.'}</div>`);
+  if(p.view==='list')return put('#cards',`${tabs}${head}<div class="card"><span class="small muted num">${n} bilgi</span><div class="pearls">${l.map(q=>`<div class="pi"><span class="tag" style="align-self:flex-start">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span><span>${esc(q.p)}</span></div>`).join('')}</div></div>`);
+  const q=l[p.i],star=S.active&&stars(S.active)[q.id];
+  put('#cards',`${tabs}${head}
+   <div class="card pfcard" id="pfcard"><div class="row between"><span class="tag">${esc(TMAP[q.t]?TMAP[q.t].name:'')}</span><span class="num small muted">${p.i+1} / ${n}</span></div>
+    <div class="bar"><i style="width:${(p.i+1)/n*100}%"></i></div>
+    <div class="pfp">${esc(q.p)}</div>
+    ${p.show?`<div class="pfq"><span class="eyebrow">SORU</span><p>${esc(q.s)}</p><div class="opt right"><span class="L">✓</span><span>${esc(q.o[q.a])}</span></div>${q.e?`<details><summary class="small">Açıklama</summary><p class="expl" style="margin-top:8px">${esc(q.e)}</p></details>`:''}${noteLink(q)}</div>`
+      :`<button class="btn soft block" data-act="pfshow">Soruyu ve cevabı göster</button>`}</div>
+   <div class="pfnav"><button class="btn plain" data-act="pfprev" ${p.i?'':'disabled'} aria-label="Önceki">‹ Önceki</button>
+    <button class="iconbtn${star?' on':''}" data-act="pfstar" aria-label="${star?'İşareti kaldır':'İşaretle'}" aria-pressed="${!!star}"><svg viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></svg></button>
+    <button class="btn" data-act="pfnext" ${p.i+1<n?'':'disabled'} aria-label="Sonraki">Sonraki ›</button></div>
+   <div class="row between small muted" style="padding:0 4px"><span>Sola/sağa kaydırarak da geçebilirsin.</span><button class="linkbtn" data-act="pfshuf">${p.sh?'Sırayı düzelt':'Karıştır'}</button></div>`)}
+function pfGo(d){const n=pfList().length,p=S.pf,k=p.i+d;if(k<0||k>=n)return;p.i=k;p.show=false;savePf();render()}
 
 /* ---------- stats ---------- */
 function spark(pid){const dd=days(pid),N=21,t=today(),v=[];for(let i=N-1;i>=0;i--){const d=dd[addDays(t,-i)]||{};v.push(d.q||0)}
@@ -938,6 +967,13 @@ document.addEventListener('click',e=>{
    case 'retrywrong':{const ids=qz.ids.filter(id=>qz.picks[id]!==(qIndex[id]||{}).a);S.quiz={ids:shuffle(ids),i:0,picks:{},checked:{},mode:'study',t0:Date.now(),done:false,pid:S.active};window.scrollTo({top:0});render();break}
    case 'star':{if(!S.active){S.sheet=true;render();return}if(!canWrite())return;const id=qz.ids[qz.i];merge('stars/'+S.active,{q:{[id]:!stars(S.active)[id]}});toast(stars(S.active)[id]?'İşaret kaldırıldı':'İşaretlendi');break}
    case 'ctab':S.cardsTab=el.dataset.v;render();break;
+   case 'pfview':S.pf.view=el.dataset.v;savePf();render();break;
+   case 'pfshow':S.pf.show=true;render();break;
+   case 'pfnext':pfGo(1);break;
+   case 'pfprev':pfGo(-1);break;
+   case 'pfshuf':S.pf.sh=!S.pf.sh;S.pf.seed=Date.now()%100000;S.pf.i=0;S.pf.show=false;savePf();render();break;
+   case 'pfstar':{if(!S.active){S.sheet=true;render();return}if(!canWrite())return;const q=pfList()[S.pf.i];if(!q)return;const v=!stars(S.active)[q.id];
+     S.stars[S.active]={...(S.stars[S.active]||{}),q:{...stars(S.active),[q.id]:v}};merge('stars/'+S.active,{q:{[q.id]:v}});toast(v?'İşaretlendi':'İşaret kaldırıldı');render();break}
    case 'startstudy':S.study={queue:dueList(S.active),flip:false,done:0};render();break;
    case 'flip':S.study.flip=true;render();break;
    case 'grade':{if(!canWrite())return;const st=S.study,id=st.queue.shift(),g=+el.dataset.g;const n=nextSrs(deck(S.active)[id],g);
@@ -950,7 +986,7 @@ document.addEventListener('click',e=>{
    case 'del':{if(!canWrite())return;const id=el.dataset.id;S.confirm=null;if(el.dataset.kind==='q')delDoc('questions/'+id);else{delDoc('profiles/'+id);if(S.active===id)S.active=null}toast('Silindi');render();break}
    case 'rename':{if(!canWrite())return;const v=document.querySelector(`[data-pname="${CSS.escape(el.dataset.id)}"]`).value.trim();if(v){merge('profiles/'+el.dataset.id,{name:v});toast('Kaydedildi')}break}
   }});
-document.addEventListener('change',e=>{if(e.target.id==='pearlTopic'){S.pearlTopic=e.target.value;e.target.blur();render()}
+document.addEventListener('change',e=>{if(e.target.id==='pearlTopic'||e.target.id==='pearlSrc'){S.pf[e.target.id==='pearlTopic'?'t':'src']=e.target.value;S.pf.i=0;S.pf.show=false;savePf();e.target.blur();render()}
   if(e.target.id==='noteTopic'){S.noteTopic=e.target.value;e.target.blur();render()}});
 document.addEventListener('input',e=>{if(e.target.id==='noteQ'){S.noteQuery=e.target.value;$('#noteRes').innerHTML=noteResults();$('#noteTopic').disabled=lower(S.noteQuery).trim().length>=2}});
 // remember which summary sections are open across re-renders
@@ -994,6 +1030,12 @@ S.fs=+(lsGet('ydus.fs')||0)%3||0;function applyFs(){document.documentElement.sty
   if(ob&&!ob.disabled&&Math.abs(dx)<12&&Math.abs(dy)<12&&Date.now()-t0<700){pickT=Date.now();doPick(+ob.dataset.i);return}
   if(Date.now()-t0>700||Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*2)return;
   const b=document.querySelector(dx<0?'[data-act=nextq]':'[data-act=prevq]');if(b&&!b.disabled)b.click()},{passive:true})}
+{let x0=null,y0=0,t0=0;const pa=()=>S.screen==='cards'&&S.cardsTab==='pearls'&&S.pf.view==='flow';
+ document.addEventListener('touchstart',e=>{if(!pa()||e.touches.length!==1||!(e.target.closest&&e.target.closest('#pfcard'))){x0=null;return}x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now()},{passive:true});
+ document.addEventListener('touchend',e=>{if(x0==null||!pa())return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;
+  if(Date.now()-t0>700||Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*2)return;pfGo(dx<0?1:-1)},{passive:true})}
+document.addEventListener('keydown',e=>{if(S.screen==='cards'&&S.cardsTab==='pearls'&&S.pf.view==='flow'&&!e.target.closest('input,select,textarea')&&!e.metaKey&&!e.ctrlKey){
+  if(e.key==='ArrowRight'){e.preventDefault();pfGo(1)}else if(e.key==='ArrowLeft'){e.preventDefault();pfGo(-1)}else if(e.key===' '||e.key==='Enter'){if(!S.pf.show){e.preventDefault();S.pf.show=true;render()}}}});
 document.addEventListener('keydown',e=>{if(S.screen!=='quiz'||!S.quiz||S.quiz.done||e.metaKey||e.ctrlKey||e.altKey||e.target.closest('input,select,textarea'))return;
   const k=e.key.toLowerCase(),i='12345'.indexOf(k)>=0?'12345'.indexOf(k):'abcde'.indexOf(k);let b=null;
   if(i>=0&&k.length===1)b=document.querySelector(`[data-act=pick][data-i="${i}"]:not(:disabled)`);
