@@ -16,8 +16,8 @@ Q('kardiyo','sik',
 Q('kardiyo','sik',
  "68 yaşında, hipertansiyonu dışında hastalığı olmayan kadın hastada nonvalvüler atriyal fibrilasyon saptanıyor. CHA2DS2-VASc skoru kaçtır?",
  ["1","2","3","4","5"],2,
- "Puanlama: yaş 65-74 = 1, kadın cinsiyet = 1, hipertansiyon = 1; toplam 3. Kadında skor ≥3 (erkekte ≥2) olduğunda oral antikoagülan önerilir. Nonvalvüler AF'de DOAK'lar varfarine tercih edilir.",
- "CHA2DS2-VASc: KKY, HT, Yaş ≥75 (2), DM, İnme/TİA (2), Vasküler hastalık, Yaş 65-74, Kadın cinsiyet.")
+ "Puanlama: yaş 65-74 = 1, kadın cinsiyet = 1, hipertansiyon = 1; toplam 3. AHA/ACC'ye göre kadında skor ≥3 (erkekte ≥2) olduğunda oral antikoagülan önerilir. ESC 2024 kılavuzu cinsiyeti çıkararak CHA2DS2-VA skorunu kullanır: bu hastada skor 2'dir ve ≥2 olduğunda (her iki cinsiyette) oral antikoagülan önerilir. Nonvalvüler AF'de DOAK'lar varfarine tercih edilir.",
+ "CHA2DS2-VASc: KKY, HT, Yaş ≥75 (2), DM, İnme/TİA (2), Vasküler hastalık, Yaş 65-74, Kadın cinsiyet. ESC 2024: CHA2DS2-VA (cinsiyet yok), ≥2 → OAK.")
 Q('kardiyo','sik',
  "İnferior duvar miyokard infarktüsü ile gelen hastada TA 80/50 mmHg, juguler venöz dolgunluk var ve akciğerler oskültasyonda temiz. Sağ prekordiyal derivasyonlarda V4R'de ST elevasyonu saptanıyor. İlk yapılması gereken hangisidir?",
  ["IV nitrogliserin","IV furosemid","IV sıvı yüklemesi","IV morfin","IV metoprolol"],2,
