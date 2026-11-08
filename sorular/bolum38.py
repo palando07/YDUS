@@ -64,11 +64,11 @@ Q('romato','sik',
  ["Temporal arter USG (halo işareti) ve aksiller arter USG","Konvansiyonel anjiyografi","Kafa grafisi","Beyin BT","Karotis Doppler'in yalnızca karotis bifurkasyonunu değerlendirmesi"],0,
  "EULAR 2023 önerisine göre kraniyal DHA şüphesinde ilk görüntüleme yöntemi temporal ve aksiller arterlerin USG'sidir; kompresyona dirençli 'halo' işareti tipik bulgudur. Yüksek klinik olasılık ve pozitif görüntüleme varsa biyopsi gerekmeden tanı konabilir. Büyük damar tutulumu için PET-BT, MR veya BT anjiyografi kullanılır. Görüntüleme veya biyopsi yapılmadan önce, özellikle görme belirtileri varsa, glukokortikoid tedavisi geciktirilmemelidir; USG bulguları steroid başlandıktan sonra birkaç gün içinde azalabilir.",
  "DHA şüphesi → temporal + aksiller arter USG (halo); yüksek olasılık + pozitif USG = biyopsisiz tanı; steroidi geciktirme.")
-Q('romato','olasi',
- "Organ tehdit eden ANCA ilişkili vaskülitte (MPO-ANCA pozitif, hızlı ilerleyen glomerülonefrit) remisyon indüksiyonunda glukokortikoid maruziyetini azaltmak için kullanılabilecek oral C5a reseptör antagonisti hangisidir?",
- ["Avakopan","Ekulizumab","Anakinra","Abatasept","Apremilast"],0,
- "ADVOCATE çalışmasında C5a reseptör antagonisti avakopan, rituksimab veya siklofosfamidle birlikte verildiğinde, standart prednizolon azaltma şemasına göre 52. haftada sürdürülen remisyonda üstün, 26. haftada remisyonda eşdeğer bulunmuş; glukokortikoid toksisitesini azaltmış ve eGFR'de daha fazla iyileşme sağlamıştır. Hepatotoksisite izlenmelidir. PEXIVAS çalışmasında plazmaferez ölüm veya son dönem böbrek hastalığını anlamlı azaltmamıştır; artık rutin önerilmez, seçilmiş ağır böbrek tutulumunda düşünülebilir.",
- "AAV indüksiyon: RTX/CYC + azaltılmış steroid veya avakopan (C5aR); plazmaferez rutin değil (PEXIVAS).")
+Q('romato','sik',
+ "ANCA ilişkili vaskülit nedeniyle 3 yıldır idame rituksimab alan hastada tekrarlayan sinüzit ve pnömoniler gelişiyor. İlk değerlendirilmesi gereken laboratuvar parametresi hangisidir?",
+ ["ANCA titresi","Serum immünoglobulin düzeyleri (özellikle IgG)","ESR","Kompleman C3","Ferritin"],1,
+ "Rituksimab CD20 pozitif B hücrelerini yok eder; tekrarlayan kullanımda hipogamaglobulinemi (özellikle IgG <400-500 mg/dL) ve ciddi enfeksiyon riski artar. Tedavi öncesi ve izlemde düzenli immünoglobulin ölçümü önerilir. Tekrarlayan ağır enfeksiyonu ve düşük IgG'si olan hastalarda rituksimab ara verilir veya kesilir, aşı yanıtı değerlendirilir ve immünoglobulin replasmanı düşünülür. Rituksimab ile ayrıca HBV reaktivasyonu, geç başlangıçlı nötropeni ve nadiren PML görülebilir.",
+ "Rituksimab + tekrarlayan enfeksiyon → IgG ölç; hipogamaglobulinemide ara ver/IVIG; HBV, geç nötropeni, PML.")
 Q('romato','sik',
  "Astım, eozinofili ve mononöritis multipleks ile seyreden, organ tehdit etmeyen relaps eden EGPA'da steroid azaltıcı olarak onaylı biyolojik tedavi hangisidir?",
  ["Mepolizumab (veya benralizumab)","İnfliksimab","Sekukinumab","Abatasept","Ustekinumab"],0,

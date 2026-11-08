@@ -59,11 +59,11 @@ Q('onko','olasi',
  ["Lutesyum-177 PSMA-617","İyot-131","Radyum-223 yalnızca visseral metastazda","İnterferon","Tamoksifen"],0,
  "VISION çalışmasında Lutesyum-177 PSMA-617 radyoligand tedavisi, PSMA pozitif mCRPC'de standart tedaviye eklendiğinde genel sağkalımı ve radyografik progresyonsuz sağkalımı uzatmıştır. En sık yan etkiler kuru ağız, yorgunluk ve kemik iliği baskılanmasıdır. Radyum-223 ise yalnızca semptomatik kemik metastazı olan, visseral metastazı olmayan hastalarda kullanılır. BRCA ve diğer homolog rekombinasyon gen mutasyonlu hastalarda PARP inhibitörleri (olaparib) de seçenektir.",
  "PSMA (+) mCRPC (ARPI + taksan sonrası) → Lu-177 PSMA-617; kemik metastazında Ra-223; BRCA → olaparib.")
-Q('onko','sik',
- "Sigara içen 66 yaşında erkek hastada ağrısız makroskopik hematüri saptanıyor; idrar kültürü negatif. Bir sonraki en uygun değerlendirme hangisidir?",
- ["İdrar sitolojisi tek başına","Sistoskopi ve BT ürografi","Yalnızca böbrek USG","Antibiyotik verip idrar tetkikini tekrarlamak","Prostat biyopsisi"],1,
- "Enfeksiyon dışlandıktan sonra makroskopik hematüri, özellikle 35 yaş üstü sigara içicilerde, mesane kanseri açısından yüksek risk taşır ve ürolojik değerlendirme gerektirir. Alt üriner sistem için sistoskopi, üst üriner sistem (böbrek ve üreter) için BT ürografi yapılır. İdrar sitolojisi yüksek dereceli tümörlerde yararlı olsa da tek başına yeterli değildir. Antikoagülan kullanımı hematüri değerlendirmesini ertelemek için bir neden değildir.",
- "Risk taşıyan hastada makroskopik hematüri → sistoskopi + BT ürografi (antikoagülan kullansa da).")
+Q('onko','olasi',
+ "HLA-A*02:01 pozitif, karaciğer metastazlı ve rezeke edilemeyen uveal melanom hastasında genel sağkalımı uzattığı gösterilen tedavi hangisidir?",
+ ["Dakarbazin","Tebentafusp","Dabrafenib + trametinib","Tamoksifen","İmatinib"],1,
+ "Uveal melanom kutanöz melanomdan farklı biyolojiye sahiptir: BRAF mutasyonu nadirdir, GNAQ/GNA11 mutasyonları sıktır ve metastazlar en sık karaciğere olur; immün kontrol noktası inhibitörlerine yanıt düşüktür. Tebentafusp, gp100'ü tanıyan TCR ile anti-CD3 içeren bispesifik bir füzyon proteinidir ve yalnızca HLA-A*02:01 pozitif hastalarda etkilidir; faz 3 çalışmada genel sağkalımı uzatmıştır. Sitokin salınım sendromu ve deri reaksiyonları sık yan etkileridir. Karaciğere yönelik tedaviler (perkütan hepatik perfüzyon) diğer seçeneklerdir.",
+ "Metastatik uveal melanom + HLA-A*02:01 → tebentafusp; BRAF nadir, ICI yanıtı düşük.")
 Q('onko','olasi',
  "Kas invaziv mesane kanseri (T2N0M0) olan ve sisplatin almaya uygun 62 yaşında hastada standart küratif tedavi hangisidir?",
  ["Yalnızca TUR ve BCG","Neoadjuvan sisplatin temelli kemoterapi + radikal sistektomi","Yalnızca radikal sistektomi","Yalnızca immünoterapi","Palyatif radyoterapi"],1,

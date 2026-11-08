@@ -9,11 +9,11 @@ Q('endo','olasi',
  ["Doğrudan sol adrenalektomi","Adrenal ven örneklemesi (AVS) ile lateralizasyonun gösterilmesi","Ömür boyu spironolakton, cerrahi gereksiz","Sağ adrenalektomi","Tekrar BT 6 ay sonra"],1,
  "35-40 yaş üstünde nonfonksiyonel adrenal insidentalomalar sık görüldüğünden BT'deki adenom aldosteron kaynağını kanıtlamaz; cerrahi düşünülen hastalarda adrenal ven örneklemesiyle lateralizasyon gösterilmelidir. 35 yaş altında, belirgin hipokalemi, çok yüksek aldosteron ve tek taraflı tipik adenomu olan hastalarda AVS atlanabilir. Bilateral hiperplazi veya cerrahiyi istemeyen hastada mineralokortikoid reseptör antagonisti (spironolakton, eplerenon) verilir.",
  "PA + adenom + cerrahi düşünülüyorsa, özellikle >35 yaş → adrenal ven örneklemesi.")
-Q('endo','sik',
- "Hipertansiyon ve hipokalemiyle başvuran hastada renin ve aldosteron düşük bulunuyor. Hasta günlük yüksek miktarda meyan kökü (meyankökü şerbeti) içtiğini söylüyor. Mekanizma hangisidir?",
- ["Aldosteron sentaz aktivasyonu","11β-hidroksisteroid dehidrogenaz tip 2 inhibisyonu ile kortizolün mineralokortikoid reseptörünü uyarması","ENaC'nin genetik aktivasyonu","Renin salgılayan tümör","Gitelman sendromu"],1,
- "Meyan kökündeki glisirizik asit 11β-HSD2'yi inhibe eder; böbrekte kortizol kortizona dönüştürülemez ve kortizol mineralokortikoid reseptörünü uyararak hipertansiyon, hipokalemi ve metabolik alkaloza yol açar (görünür mineralokortikoid fazlalığı). Renin ve aldosteron baskılanır. Benzer tablo ağır ektopik ACTH sendromunda ve konjenital AME'de görülür. Düşük renin-düşük aldosteronlu diğer nedenler Liddle sendromu (ENaC aktivasyonu, amiloride yanıt), DOC salgılayan tümör ve KAH'nın 11β- veya 17α-hidroksilaz eksikliği formlarıdır.",
- "HT + hipokalemi + renin ↓ + aldosteron ↓: meyan kökü/AME (11β-HSD2), Liddle (amilorid), DOC fazlalığı.")
+Q('endo','olasi',
+ "Böbrek taşı ve osteoporozu olan hastada PTH tekrarlayan ölçümlerde yüksek, serum ve iyonize kalsiyum ise normal bulunuyor. Normokalsemik primer hiperparatiroidi tanısından önce dışlanması gereken durumlar hangileridir?",
+ ["Hipertiroidi","D vitamini eksikliği, KBH (eGFR <60), tiyazid/lityum kullanımı, hiperkalsiüri ve malabsorpsiyon gibi sekonder hiperparatiroidi nedenleri","Hipoaldosteronizm","Akromegali","Hiperprolaktinemi"],1,
+ "Normokalsemik primer hiperparatiroidi, sekonder nedenler dışlandığında, total ve iyonize kalsiyumun normal olmasına rağmen PTH'nin sürekli yüksek kalmasıdır. Tanı öncesi 25(OH)D düzeyi ≥30 ng/mL'ye yükseltilmeli, eGFR <60, malabsorpsiyon (çölyak, bariatrik cerrahi), idiyopatik renal hiperkalsiüri ve PTH'yi yükselten ilaçlar (tiyazid, lityum, bifosfonat, denosumab) dışlanmalıdır. Bu hastaların bir kısmı zamanla hiperkalsemik forma ilerler. Taş, kırık veya osteoporoz varlığında cerrahi değerlendirilir.",
+ "Normokalsemik PHPT: önce D vitamini ≥30 yap; KBH, malabsorpsiyon, hiperkalsiüri, tiyazid/lityumu dışla.")
 Q('endo','olasi',
  "Genç yaşta hipertansiyonu ve ailesinde 40 yaş öncesi hemorajik inme öyküsü olan hastada aldosteron yüksek, renin baskılı; deksametazon verilmesiyle aldosteron ve KB normale dönüyor. En olası tanı hangisidir?",
  ["Aldosteron üreten adenom","Glukokortikoidle baskılanabilen aldosteronizm (ailesel hiperaldosteronizm tip 1)","Liddle sendromu","Bartter sendromu","Feokromositoma"],1,
@@ -25,10 +25,10 @@ Q('endo','sik',
  "Nelson sendromu (kortikotrop tümör progresyonu), bilateral adrenalektomi sonrası kortizolün negatif geri bildiriminin kalkmasıyla hipofizer ACTH salgılayan adenomun büyümesidir. Çok yüksek ACTH düzeyi belirgin hiperpigmentasyona yol açar; tümör lokal bası (görme alanı, kranyal sinir) yapabilir. Bilateral adrenalektomi yapılan hastalarda düzenli ACTH ölçümü ve hipofiz MR izlemi önerilir. Tedavi cerrahi, radyoterapi ve gerektiğinde pasireotiddir.",
  "Bilateral adrenalektomi sonrası hiperpigmentasyon + büyüyen hipofiz adenomu = Nelson sendromu.")
 Q('endo','olasi',
- "İnatçı poliüri (5 L/gün) ve hipotonik idrarı olan hastada su kısıtlama testi belirsiz sonuç veriyor. Hipertonik salin infüzyonu sonrası plazma Na 152 mEq/L iken kopeptin 2,1 pmol/L ölçülüyor. En olası tanı hangisidir?",
- ["Primer polidipsi","AVP eksikliği (santral diabetes insipidus)","AVP direnci (nefrojenik diabetes insipidus)","Osmotik diürez","Normal yanıt"],1,
- "Kopeptin AVP ile aynı öncülden eşit miktarlarda salgılanan, stabil ve ölçümü kolay bir belirteçtir. Hipertonik salinle Na ≥150 mEq/L'ye ulaşıldığında kopeptin ≤4,9 pmol/L ise AVP eksikliği (santral DI), >4,9 pmol/L ise primer polidipsi olarak yorumlanır; bu test su kısıtlama testinden daha doğrudur. Bazal kopeptin >21 pmol/L ise test gerekmeden AVP direnci (nefrojenik DI) düşünülür. 2022'de diabetes insipidus terimleri 'AVP eksikliği' ve 'AVP direnci' olarak değiştirilmiştir.",
- "Hipertonik salin sonrası kopeptin ≤4,9 = AVP eksikliği (santral DI); >4,9 = primer polidipsi; bazal >21 = AVP direnci.")
+ "Romatoid artrit nedeniyle uzun süredir prednizolon 5 mg/gün kullanan hastada adrenal yetmezlik riski açısından eşdeğer glukokortikoid dozlarıyla ilgili doğru ifade hangisidir?",
+ ["Prednizolon 5 mg yaklaşık 20 mg hidrokortizona ve 0,75 mg deksametazona eşdeğerdir","Prednizolon 5 mg, 5 mg hidrokortizona eşdeğerdir","Deksametazon mineralokortikoid etkisi en güçlü olandır","Hidrokortizonun mineralokortikoid etkisi yoktur","Tüm glukokortikoidlerin etki süresi aynıdır"],0,
+ "Glukokortikoid etki eşdeğerlikleri yaklaşık olarak hidrokortizon 20 mg = prednizolon 5 mg = metilprednizolon 4 mg = deksametazon 0,75 mg şeklindedir. Hidrokortizon belirgin, prednizolon hafif mineralokortikoid etki gösterir; deksametazonun mineralokortikoid etkisi yoktur ve etki süresi en uzundur. Fizyolojik dozun (yaklaşık 5 mg prednizolon) üzerinde 3-4 haftadan uzun kullanım HPA eksenini baskılayabilir; bu hastalarda stres dönemlerinde doz artırılır ve tedavi yavaş azaltılarak kesilir.",
+ "Eşdeğer: hidrokortizon 20 = prednizolon 5 = metilprednizolon 4 = deksametazon 0,75 mg.")
 Q('endo','sik',
  "Puberte gecikmesi ve koku alma kaybı (anozmi) olan 19 yaşında erkek hastada testosteron düşük, LH ve FSH düşük; hipofiz MR normal. En olası tanı hangisidir?",
  ["Klinefelter sendromu","Kallmann sendromu","Prolaktinoma","Androjen duyarsızlık sendromu","Primer testis yetmezliği"],1,

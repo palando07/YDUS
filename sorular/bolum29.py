@@ -49,11 +49,11 @@ Q('gastro','olasi',
  ["BMPR1A","SMAD4","APC","MLH1","CDH1"],1,
  "Juvenil polipozis sendromu SMAD4 veya BMPR1A mutasyonlarıyla gelişir. SMAD4 mutasyonu taşıyanlarda kalıtsal hemorajik telenjiektazi (Osler-Weber-Rendu) birlikteliği sık görülür; bu nedenle SMAD4 taşıyıcıları beyin ve akciğer AVM'leri açısından taranmalıdır. Juvenil polipozisli hastalarda kolorektal ve mide kanseri riski artmıştır. CDH1 kalıtsal diffüz mide kanseriyle, MLH1 Lynch sendromuyla ilişkilidir.",
  "Juvenil polipozis + HHT = SMAD4; AVM taraması yap.")
-Q('gastro','sik',
- "Genel risk taşıyan bireylerde kolorektal kanser taramasına başlama yaşı güncel ABD önerilerine (USPSTF 2021, ACS) göre kaçtır?",
- ["40","45","50","55","60"],1,
- "Genç erişkinlerde kolorektal kanser insidansının artması nedeniyle USPSTF 2021 ve Amerikan Kanser Derneği ortalama riskli bireylerde taramaya 45 yaşında başlanmasını önermektedir. 76-85 yaş arasında karar bireyselleştirilir; 85 yaş üstünde tarama önerilmez. Birinci derece akrabasında 60 yaş öncesi kolorektal kanser veya ileri adenom olanlarda tarama 40 yaşında ya da akrabanın tanı yaşından 10 yıl önce başlatılır ve 5 yılda bir kolonoskopi yapılır.",
- "Ortalama risk: 45 yaşında tarama; 1. derece akrabada <60 yaş KRK → 40 yaş veya 10 yıl önce.")
+Q('gastro','olasi',
+ "Asiti olan sirozlu hastada Na 124 mEq/L saptanıyor; hipervolemik, nörolojik bulgu yok, diüretik altında. En uygun yaklaşım hangisidir?",
+ ["Hızlı %3 NaCl infüzyonu","Sıvı kısıtlaması (1-1,5 L/gün), diüretik dozunun gözden geçirilmesi; ağır hiponatremide albümin; tolvaptan uzun süreli önerilmez","Uzun süreli tolvaptan ilk tercih","Tuz tabletleri ve izotonik sıvı yüklemesi","Hiçbir şey yapılmaz"],1,
+ "Sirozda hipervolemik hiponatremi splanknik vazodilatasyon ve AVP salgısının artmasına bağlıdır ve kötü prognoz göstergesidir (MELD-Na). Na <125-130 mEq/L'de sıvı kısıtlaması yapılır, diüretikler azaltılır veya geçici kesilir; ağır hiponatremide albümin infüzyonu yararlı olabilir. Tolvaptan karaciğer hasarı riski nedeniyle sirozda uzun süreli kullanılmaz. Kronik hiponatremi hızlı düzeltilirse osmotik demiyelinizasyon riski özellikle yüksektir (siroz, alkol, malnütrisyon); 24 saatte artış ≤8 mEq/L ile sınırlandırılmalıdır.",
+ "Sirozda hiponatremi: sıvı kısıtlaması + diüretiği azalt (± albümin); tolvaptan uzun süre yok; ODS riski yüksek, yavaş düzelt.")
 Q('gastro','olasi',
  "Yemekten 30 dakika sonra başlayan karın ağrısı nedeniyle yemek yemekten korkan ve 6 ayda 10 kg kaybeden, sigara içen 70 yaşında kadın hastada en olası tanı hangisidir?",
  ["İrritabl bağırsak sendromu","Kronik mezenterik iskemi","Peptik ülser","Kronik pankreatit","Fonksiyonel dispepsi"],1,
@@ -65,10 +65,10 @@ Q('gastro','sik',
  "Mide ülserlerinin bir kısmı malign olabileceğinden ilk endoskopide ülser kenarından çok sayıda biyopsi alınır. Biyopsi benign olsa bile şüpheli görünüm, yetersiz biyopsi, H. pylori dışı açıklanamayan neden veya malignite riski olan hastada 8-12 hafta sonra iyileşmeyi ve maligniteyi değerlendirmek için kontrol endoskopisi yapılır. Duodenal ülserlerde malignite çok nadir olduğundan rutin biyopsi ve kontrol gerekmez. H. pylori tüm ülserlerde araştırılır.",
  "Mide ülseri → kenar biyopsisi + gerekirse 8-12 hafta sonra kontrol; duodenal ülserde rutin değil.")
 Q('gastro','olasi',
- "Tüberküloz tedavisinin 4. haftasındaki hastada bulantı ve halsizlik gelişiyor; ALT 280 U/L (normalin 7 katı), bilirubin normal. En uygun yaklaşım hangisidir?",
- ["Tedaviye aynı dozda devam","Hepatotoksik ilaçları (izoniazid, rifampisin, pirazinamid) kesmek; enzimler düzeldikten sonra sırayla yeniden başlamak","Yalnızca izoniazidi kesmek ve diğerlerine devam","Tüm tedaviyi kalıcı olarak bırakmak","Prednizolon eklemek"],1,
- "Anti-TB ilaç ilişkili karaciğer hasarında ALT'nin semptom varlığında normalin 3 katını, semptom yokluğunda 5 katını aşması veya bilirubin artışı durumunda hepatotoksik ilaçlar kesilir. Ağır hastalıkta geçici olarak etambutol + florokinolon + aminoglikozit gibi hepatotoksik olmayan rejim verilebilir. Enzimler normalin 2 katının altına inince ilaçlar teker teker yeniden başlanır (genellikle önce rifampisin, sonra izoniazid); pirazinamid sorumlu bulunursa çıkarılır.",
- "TB ilacı hepatotoksisitesi: ALT >3x (semptomlu) veya >5x → kes; düzelince sırayla yeniden başla.")
+ "Prostat kanseri nedeniyle 2 yıl önce pelvik radyoterapi alan 72 yaşında hastada tekrarlayan rektal kanama ve demir eksikliği anemisi var. Kolonoskopide rektumda çok sayıda telenjiektazi görülüyor. Kanamayı kontrol etmede ilk tercih endoskopik tedavi hangisidir?",
+ ["Argon plazma koagülasyonu","Acil rektum rezeksiyonu","Mesalazin fitili","Uzun süreli sistemik steroid","Bant ligasyonu"],0,
+ "Kronik radyasyon proktiti radyoterapiden aylar-yıllar sonra endarterit ve iskemiye bağlı mukozal telenjiektazilerle gelişir; en sık bulgu tekrarlayan rektal kanamadır. İlk tercih endoskopik tedavi argon plazma koagülasyonudur; topikal formalin uygulaması ve radyofrekans ablasyon diğer seçeneklerdir. Sukralfat lavmanı ve hiperbarik oksijen tedavisi de yararlı olabilir. Fistül ve darlık gibi ağır komplikasyonlarda cerrahi düşünülür. Biyopsi fistül riskini artırabileceğinden dikkatli alınmalıdır.",
+ "Kronik radyasyon proktiti kanaması → argon plazma koagülasyonu (alternatif formalin, HBO).")
 Q('gastro','sik',
  "Bilinen sirozu olan (Child-Pugh A) ve LDL yüksekliği nedeniyle statin endikasyonu bulunan hastada doğru yaklaşım hangisidir?",
  ["Statin kontrendikedir","Statin güvenle kullanılabilir; sirozda dekompansasyon ve mortaliteyi azaltabilir","Yalnızca ezetimib verilmelidir","Önce karaciğer biyopsisi yapılmalıdır","Transaminazlar normalin 1,5 katıysa statin başlanmaz"],1,
@@ -85,10 +85,10 @@ Q('gastro','sik',
  "Minimal (gizli) hepatik ensefalopatide klinik muayene normaldir; tanı psikometrik testlerle (PHES, Animal Naming Test, EncephalApp Stroop testi) konur. Araç kullanma becerisi, iş performansı ve yaşam kalitesini bozar, aşikâr ensefalopatiye ilerlemeyi öngörür. Serum amonyak düzeyi tanı ve evrelemede güvenilir değildir; normal amonyak ise ensefalopatiyi büyük olasılıkla dışlar. Tedavisinde laktuloz kullanılabilir.",
  "Minimal HE: muayene normal, tanı psikometrik test (PHES, Stroop); amonyak tanı koydurmaz.")
 Q('gastro','lab',
- "65 yaşında kadın hasta. Fe 25 µg/dL, ferritin 6 ng/mL, Hb 9,2 g/dL, MCV 72 fL. Menopozu 12 yıl önce. GİS yakınması yok; NSAİİ kullanmıyor.\nEn uygun yaklaşım hangisidir?",
- ["Yalnızca oral demir ve 3 ay sonra kontrol","Üst ve alt GİS endoskopisi (gastroskopi + kolonoskopi), duodenum biyopsisi ile","Kemik iliği biyopsisi","Hemoglobin elektroforezi","Yalnızca dışkıda gizli kan testi"],1,
- "Postmenopozal kadın ve erkekte demir eksikliği anemisi (ferritin <30-45 ng/mL) aksi kanıtlanana kadar GİS kaynaklı kan kaybına bağlıdır. AGA ve BSG kılavuzları ilk değerlendirmede iki yönlü endoskopiyi (gastroskopi ve kolonoskopi) önerir; gastroskopide çölyak için duodenum biyopsisi alınır. Atrofik gastrit ve H. pylori de değerlendirilir. Dışkıda gizli kan negatifliği tetkik ihtiyacını ortadan kaldırmaz. Tetkikler planlanırken demir replasmanı başlanır.",
- "Erkek/postmenopozal kadında demir eksikliği → gastroskopi (duodenum biyopsisi) + kolonoskopi.")
+ "Süt ürünleri tükettikten sonra şişkinlik, gaz ve sulu ishal yakınması olan 30 yaşında hasta.\nDışkı ozmotik açığı: 145 mOsm/kg.\nLaktoz yüklemesi sonrası hidrojen nefes testi: 90. dakikada bazale göre 32 ppm artış.\nÇölyak serolojisi negatif.\nEn olası tanı hangisidir?",
+ ["Sekretuar ishal","Laktoz intoleransı (laktaz eksikliği)","İnce bağırsak bakteriyel aşırı çoğalması kesin tanısı","Mikroskobik kolit","Safra asidi ishali"],1,
+ "Laktaz eksikliğinde sindirilemeyen laktoz kolonda bakteriler tarafından fermente edilir; ozmotik ishal, gaz ve şişkinlik oluşur. Dışkı ozmotik açığının >125 mOsm/kg olması ozmotik ishali, açlıkla düzelmesi de bu tanıyı destekler. Laktoz yüklemesi sonrası nefeste hidrojenin bazale göre ≥20 ppm artması tanı koydurur. Tedavi laktoz kısıtlaması veya laktaz enzim desteğidir; kalsiyum alımının sürdürülmesine dikkat edilmelidir. Sekonder laktaz eksikliği çölyak, gastroenterit ve Crohn hastalığından sonra gelişebilir.",
+ "Ozmotik açık >125 + laktoz sonrası nefeste H2 ≥20 ppm artış = laktoz intoleransı.")
 Q('gastro','olasi',
  "Antiplatelet tedavi alan hastada kolonoskopide 15 mm polip çıkarılıyor. 7 gün sonra hasta ağrısız hematokezi ile başvuruyor; hemodinamisi stabil. En olası tanı ve tedavi hangisidir?",
  ["İskemik kolit; izlem","Gecikmiş polipektomi sonrası kanama; kolonoskopi ile endoskopik hemostaz (klip)","Divertiküler kanama; anjiyografi","Hemoroid; topikal tedavi","Kolon perforasyonu; acil cerrahi"],1,

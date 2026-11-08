@@ -39,11 +39,11 @@ Q('kardiyo','olasi',
  ["Koroner arter kalsiyum skoru (KAK)","Egzersiz EKG","Karotis intima-media kalınlığı","Rutin koroner anjiyografi","Homosistein"],0,
  "Sınırda veya orta riskli asemptomatik bireylerde statin kararı belirsizse koroner arter kalsiyum skoru riskin yeniden sınıflandırılmasında en güçlü kanıta sahip tetkiktir. KAK = 0 ise (özellikle diyabet, sigara ve güçlü aile öyküsü yoksa) statin ertelenebilir; KAK ≥100 veya ≥75. persentil statin endikasyonunu güçlendirir. Lp(a), hs-CRP, ABİ, aile öyküsü ve kronik inflamatuvar hastalıklar da risk artırıcı faktörlerdir. Karotis İMK ölçümü artık önerilmez.",
  "Orta risk + statin kararsızlığı → KAK skoru; 0 ise ertelenebilir, ≥100 ise statin.")
-Q('kardiyo','sik',
- "KVH'si olmayan 68 yaşında diyabetik olmayan hastada primer korunma amacıyla düşük doz aspirin için güncel öneri hangisidir?",
- ["Rutin olarak herkese önerilir","60 yaş üstünde primer korunmada rutin başlanması önerilmez; kanama riski yararı dengeler","Yalnızca kadınlara önerilir","Tüm hastalara yüksek doz aspirin","Aspirin klopidogrelle birlikte verilir"],1,
- "ASPREE, ARRIVE ve ASCEND çalışmaları primer korunmada aspirinin iskemik olayları az miktarda azalttığını ancak majör kanamayı benzer ölçüde artırdığını göstermiştir. USPSTF 2022, 60 yaş ve üzerinde primer korunma için aspirin başlanmamasını önerir; 40-59 yaş arası, 10 yıllık KV riski ≥%10 ve kanama riski düşük olanlarda karar bireyselleştirilir. Sekonder korunmada (kanıtlanmış ASKVH) ise aspirin açıkça yararlıdır.",
- "Primer korunmada ≥60 yaş rutin aspirin yok; sekonder korunmada aspirin evet.")
+Q('kardiyo','olasi',
+ "Çarpıntı yakınması olan, yapısal kalp hastalığı bilinmeyen hastada Holter'de ventriküler erken atım yükü %22 ve ekokardiyografide EF %40 saptanıyor; iskemi ve diğer nedenler dışlanmış. En uygun yaklaşım hangisidir?",
+ ["Yalnızca izlem; erken atımlar zararsızdır","VEA ilişkili kardiyomiyopati düşünülerek beta bloker/antiaritmik veya kateter ablasyonu ile erken atım yükünün azaltılması","Hemen ICD","Digoksin","Kalp nakli listesi"],1,
+ "Sık ventriküler erken atımlar (genellikle yük >%10-15, özellikle >%20) zamanla sol ventrikül disfonksiyonuna yol açabilir (VEA ilişkili kardiyomiyopati). En sık kaynak sağ veya sol ventrikül çıkış yoludur. Tedavide beta bloker, nondihidropiridin KKB veya antiaritmikler kullanılabilir; tek odaklı sık VEA'da kateter ablasyonu yüksek başarı oranıyla erken atımları ortadan kaldırır ve EF'nin düzelmesini sağlar. EF'nin geri dönüşümlü olup olmadığı tedavi sonrası değerlendirilmeden primer koruma ICD'si takılmamalıdır.",
+ "VEA yükü >%10-20 + EF ↓ = VEA kardiyomiyopatisi → ilaç veya ablasyon; EF düzelebilir, erken ICD yok.")
 Q('kardiyo','olasi',
  "NSTE-AKS nedeniyle PKG yapılacak hastada daha önce iskemik inme öyküsü varsa aşağıdaki P2Y12 inhibitörlerinden hangisi kontrendikedir?",
  ["Klopidogrel","Tikagrelor","Prasugrel","Kangrelor","Hiçbiri"],2,
