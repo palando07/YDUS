@@ -272,6 +272,7 @@ mark{background:none;color:inherit}
 .mk{width:22px;height:22px;border-radius:6px;flex-shrink:0;display:grid;place-items:center;font-size:.75rem;font-weight:700;color:#fff;margin-top:2px}
 .mk.r{background:var(--good)} .mk.w{background:var(--bad)} .mk.e{background:var(--muted)}
 .clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+details[open]>summary .clamp{display:block;-webkit-line-clamp:unset;overflow:visible}
 
 /* cards */
 .grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -517,11 +518,13 @@ function sessData(qz){return{ids:qz.ids,i:qz.i,picks:qz.picks||{},checked:qz.che
 function writeSess(pid,d){lsSet('ydus.sess.'+pid,JSON.stringify(d));if(db&&!S.readOnly)enqueue('oturum/'+pid,()=>db.doc('oturum/'+pid).set(d))}
 function saveSess(now){const qz=S.quiz;if(!qz||qz.done)return;const pid=qz.pid||(qz.pid=S.active);if(!pid)return;
   const sig=JSON.stringify([qz.ids.length,qz.i,qz.picks,qz.checked,qz.flags]);if(!now&&sig===sessSig)return;sessSig=sig;
-  clearTimeout(sessT);if(now)writeSess(pid,sessData(qz));else sessT=setTimeout(()=>{if(S.quiz===qz&&!qz.done)writeSess(pid,sessData(qz))},700)}
+  const d=sessData(qz);lsSet('ydus.sess.'+pid,JSON.stringify(d));S.oturum[pid]=d;
+  clearTimeout(sessT);if(now)writeSess(pid,d);else sessT=setTimeout(()=>{if(S.quiz===qz&&!qz.done)writeSess(pid,sessData(qz))},400)}
 function clearSess(pid){pid=pid||S.active;clearTimeout(sessT);sessSig='';if(!pid)return;lsSet('ydus.sess.'+pid,'');
   if(S.oturum[pid])delete S.oturum[pid];if(db&&!S.readOnly)enqueue('oturum/'+pid,()=>db.doc('oturum/'+pid).delete())}
 function pendingSess(pid){if(!pid)return null;if(S.quiz&&!S.quiz.done&&(S.quiz.pid||S.active)===pid)return{...sessData(S.quiz),live:true};
-  let x=S.oturum[pid];if(!x||!Array.isArray(x.ids)){try{x=JSON.parse(lsGet('ydus.sess.'+pid)||'null')}catch(e){x=null}}
+  let x=S.oturum[pid],l=null;try{l=JSON.parse(lsGet('ydus.sess.'+pid)||'null')}catch(e){}
+  if(!x||!Array.isArray(x.ids)||(l&&Array.isArray(l.ids)&&(l.saved||0)>(x.saved||0)))x=l;
   if(!x||!Array.isArray(x.ids))return null;const ids=x.ids.filter(id=>qIndex[id]);return ids.length?{...x,n:ids.length}:null}
 function sessDone(x){return x.mode==='study'?Object.keys(x.checked||{}).filter(k=>x.checked[k]).length:Object.keys(x.picks||{}).length}
 function resumeCard(){const x=pendingSess(S.active);if(!x)return '';const n=x.ids.length,d=sessDone(x);
@@ -764,6 +767,7 @@ let timerInt=null;function tick(){clearInterval(timerInt);const up=()=>{const e=
   if(qz.lim){const l=Math.max(0,qz.lim-s);e.textContent=`Kalan ${Math.floor(l/60)}:${pad(l%60)}`;e.classList.toggle('low',l<=600)}
   else{const tgt=Math.round(qz.ids.length*90);e.textContent=`${Math.floor(s/60)}:${pad(s%60)} / hedef ${Math.floor(tgt/60)} dk`}};up();timerInt=setInterval(up,1000)}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)saveSess(true)});
+window.addEventListener('pagehide',()=>saveSess(true));document.addEventListener('freeze',()=>saveSess(true));
 // the YDUS clock runs while the exam is open; leaving with X pauses it
 setInterval(()=>{const qz=S.quiz;if(!qz||qz.done||!qz.lim||S.dbState==='loading')return;if(Date.now()>=qz.t0+qz.lim*1000){finishQuiz();toast('Süre doldu, deneme bitti.')}},1000);
 
