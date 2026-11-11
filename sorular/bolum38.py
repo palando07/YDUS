@@ -70,7 +70,7 @@ Q('romato','sik',
  "Rituksimab CD20 pozitif B hücrelerini yok eder; tekrarlayan kullanımda hipogamaglobulinemi (özellikle IgG <400-500 mg/dL) ve ciddi enfeksiyon riski artar. Tedavi öncesi ve izlemde düzenli immünoglobulin ölçümü önerilir. Tekrarlayan ağır enfeksiyonu ve düşük IgG'si olan hastalarda rituksimab ara verilir veya kesilir, aşı yanıtı değerlendirilir ve immünoglobulin replasmanı düşünülür. Rituksimab ile ayrıca HBV reaktivasyonu, geç başlangıçlı nötropeni ve nadiren PML görülebilir.",
  "Rituksimab + tekrarlayan enfeksiyon → IgG ölç; hipogamaglobulinemide ara ver/IVIG; HBV, geç nötropeni, PML.")
 Q('romato','sik',
- "Astım, eozinofili ve mononöritis multipleks ile seyreden, organ tehdit etmeyen relaps eden EGPA'da steroid azaltıcı olarak onaylı biyolojik tedavi hangisidir?",
+ "Astım, eozinofili ve kronik rinosinüzit ile seyreden, organ tehdidi olmayan ve steroid azaltılınca relaps eden EGPA'da steroid azaltıcı olarak onaylı biyolojik tedavi hangisidir?",
  ["Mepolizumab (veya benralizumab)","İnfliksimab","Sekukinumab","Abatasept","Ustekinumab"],0,
  "EGPA'da organ veya hayatı tehdit eden tutulumda (kardiyak, renal, SSS, GİS, ağır mononöritis) indüksiyon steroid + siklofosfamid veya rituksimabdır. Organ tehdit etmeyen veya relaps eden/dirençli hastalıkta anti-IL-5 mepolizumab (MIRRA, 300 mg/4 hafta) ve anti-IL-5R benralizumab (MANDARA) remisyonu artırır ve steroid ihtiyacını azaltır. Kardiyak tutulum en önemli mortalite nedenidir; tanıda EKG, eko ve gerekirse kardiyak MR yapılmalıdır.",
  "EGPA: organ tehdidi → steroid + CYC/RTX; non-severe/relaps → mepolizumab veya benralizumab; kardiyak tutulumu ara.")
